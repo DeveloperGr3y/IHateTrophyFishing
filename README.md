@@ -28,8 +28,12 @@ You can pick the sound.
 louder and flashier; when it ends you get a chat message with buttons to share it in party, guild or all chat.
 Lives in the Dopamine Enhancers tab, which has a master switch if you'd rather not.
 
+<img src="docs/images/streak.png" alt="Streak counter" width="400">
+
 **Roulette.** Catch a Gold or Diamond and a CS:GO-style case opening spins through trophy cards before landing on
 yours. Can be limited to your first of each, or turned off. Try it with `/ihtf roulette`.
+
+<img src="docs/images/roulette.png" alt="Roulette" width="560">
 
 **The small stuff.**
 - Only counts time you're actually fishing, so AFK doesn't wreck your rates.
