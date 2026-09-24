@@ -2,6 +2,7 @@ package io.github.developergr3y.ihtf.trophy
 
 import io.github.developergr3y.ihtf.IHateTrophyFishing
 import io.github.developergr3y.ihtf.data.Storage
+import io.github.developergr3y.ihtf.features.achievements.Achievements
 import io.github.developergr3y.ihtf.hud.HudManager
 import io.github.developergr3y.ihtf.util.Compat
 import io.github.developergr3y.ihtf.util.firstColour
@@ -105,6 +106,7 @@ object MenuImport {
 
         Storage.markDirty()
         HudManager.refreshAll()
+        Achievements.onSynced()
         if (changedCounts > 0) IHateTrophyFishing.chat("Updated $changedCounts trophy counts from this menu.")
         if (pity.isNotEmpty()) IHateTrophyFishing.chat("Synced pity progress for ${pity.size} trophies.")
     }

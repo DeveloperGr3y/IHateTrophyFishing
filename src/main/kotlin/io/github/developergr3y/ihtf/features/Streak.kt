@@ -2,14 +2,14 @@ package io.github.developergr3y.ihtf.features
 
 import io.github.developergr3y.ihtf.IHateTrophyFishing
 import io.github.developergr3y.ihtf.data.Storage
+import io.github.developergr3y.ihtf.features.achievements.Achievements
 import io.github.developergr3y.ihtf.trophy.FishCounts
 import io.github.developergr3y.ihtf.trophy.TrophyTier
 import io.github.developergr3y.ihtf.util.Compat
+import io.github.developergr3y.ihtf.util.Share
 import io.github.developergr3y.ihtf.util.Sounds
 import net.minecraft.client.Minecraft
-import net.minecraft.network.chat.ClickEvent
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.HoverEvent
 
 /**
  * osu!-style trophy streak: trophies caught in a row, as long as each one comes within [GRACE_MS] of the last.
@@ -60,6 +60,8 @@ object Streak {
         if (!isActive) return
         val now = System.currentTimeMillis()
         if (count > 0 && now - lastCatchAt > GRACE_MS) end(now)
+        // Saved with under a second left on the countdown.
+        if (count >= SHOW_FROM && now - lastCatchAt > GRACE_MS - 1_000) Achievements.onClutch()
         if (count == 0) {
             startedAt = now
             tiers = FishCounts()
@@ -70,6 +72,7 @@ object Streak {
         count += amount
         tiers.add(tier, amount)
         lastCatchAt = now
+        Achievements.onStreak(count)
 
         val profile = Storage.profile()
         val previousBest = profile.bestStreak
@@ -125,6 +128,7 @@ object Streak {
             playSound("entity.item.break", 0.7f, 0.9f)
         }
         if (count >= ANNOUNCE_FROM) announce()
+        Achievements.onStreakLost(count)
         reset()
     }
 
@@ -146,18 +150,8 @@ object Streak {
         val message = Component.literal(
             "§6[IHTF] §eStreak over: §f§l$count trophies in a row!§r§7$rareText in $duration · Best: $best" +
                 (if (beatBestThisStreak) " §a§lNEW BEST!" else "") + " ",
-        )
-            .append(shareButton("§d[Share to Party]", "/pc $shareText"))
-            .append(Component.literal(" "))
-            .append(shareButton("§2[Share to Guild]", "/gc $shareText"))
-            .append(Component.literal(" "))
-            .append(shareButton("§f[Share to All]", "/ac $shareText"))
+        ).append(Share.buttons(shareText))
         Compat.chat.addClientSystemMessage(message)
-    }
-
-    private fun shareButton(label: String, command: String) = Component.literal(label).withStyle {
-        it.withClickEvent(ClickEvent.SuggestCommand(command))
-            .withHoverEvent(HoverEvent.ShowText(Component.literal("§7Puts this in your chat box so you can send it:\n§f$command")))
     }
 
     private fun playSound(name: String, pitch: Float, volume: Float) {

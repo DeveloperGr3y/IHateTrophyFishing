@@ -38,6 +38,9 @@ class ProfileData {
     /** Longest trophy streak ever on this profile. */
     @Expose var bestStreak = 0
 
+    /** Unlocked achievement id -> when it was unlocked (epoch millis). */
+    @Expose var achievements: MutableMap<String, Long> = mutableMapOf()
+
     @Expose var session = Period()
     @Expose var days: MutableMap<String, Period> = mutableMapOf()
     @Expose var total = Period()
@@ -109,5 +112,8 @@ object Storage {
 
     val profileName: String get() = root.lastProfile[playerId()] ?: "default"
 
-    fun profile(): ProfileData = root.profiles.getOrPut("${playerId()}:$profileName") { ProfileData() }
+    /** "<player uuid>:<profile name>" for whoever is playing right now. */
+    val profileKey get() = "${playerId()}:$profileName"
+
+    fun profile(): ProfileData = root.profiles.getOrPut(profileKey) { ProfileData() }
 }
