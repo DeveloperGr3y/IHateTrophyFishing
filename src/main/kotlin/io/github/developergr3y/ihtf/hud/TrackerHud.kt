@@ -22,9 +22,10 @@ object TrackerHud : HudElement("Trophy Tracker") {
         config.position = TrackerConfig().position
     }
 
-    // Always shown with your inventory open, so you can reach the buttons (e.g. to resume).
+    override val enabled get() = config.enabled
+
     override fun isVisible(inInventory: Boolean) =
-        config.enabled && (inInventory || !config.onlyWhileFishing || !Tracker.isPaused)
+        enabled && Visibility.allowed(config.where, config.showWhen, inInventory)
 
     override fun build(inInventory: Boolean): List<HudLine> {
         val view = config.view

@@ -8,6 +8,7 @@ import io.github.developergr3y.ihtf.hud.HudManager
 import io.github.developergr3y.ihtf.trophy.FishCounts
 import io.github.developergr3y.ihtf.trophy.Trophies
 import io.github.developergr3y.ihtf.trophy.TrophyTier
+import io.github.developergr3y.ihtf.util.Location
 import net.minecraft.client.Minecraft
 
 enum class TrackerView(private val label: String) {
@@ -27,8 +28,9 @@ data class RecentCatch(val key: String, val tier: TrophyTier, val time: Long)
 /**
  * Counts catches and "active fishing time".
  *
- * Time only counts while you are actually fishing: it keeps running while your bobber is in lava (or water, for
- * Trophy Frogs; configurable), and for up to the AFK timeout after that (covers reeling in and recasting). After that it pauses,
+ * Time only counts while you are actually fishing on the Crimson Isle or Lotus Atoll: it keeps running while
+ * your bobber is in lava (or water, for Trophy Frogs; configurable), and for up to the AFK timeout after that
+ * (covers reeling in and recasting). After that it pauses,
  * so catches per hour aren't dragged down by time spent AFK or doing something else.
  * It can also be paused by hand from the tracker's inventory buttons.
  */
@@ -75,6 +77,8 @@ object Tracker {
         val elapsed = now - lastTick
         lastTick = now
         if (client.player == null) return // not in a world yet: no profile to count time for
+        // Only trophy fishing counts, so water fishing on your private island doesn't drag your rates down.
+        if (!Location.onTrophyIsland) return
 
         val hook = client.player?.fishing
         val countWater = IHateTrophyFishing.config.trackers.trophyFish.countWaterFishing
