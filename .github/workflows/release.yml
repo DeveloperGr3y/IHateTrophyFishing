@@ -4,6 +4,7 @@
 #   2. release-please opens (or updates) a "chore(main): release x.y.z" PR with the changelog and version bump.
 #   3. Merging that PR creates the tag + GitHub release; the build job compiles every Minecraft version and the
 #      publish job attaches the jars (GitHub adds the source code archives itself).
+#   4. The modrinth job then uploads the same jars to Modrinth (see modrinth.yml).
 #
 # Security: the build runs third-party code (Gradle plugins, dependencies), so it gets a read-only token and no
 # secrets. Only the publish job can write to releases, and it never runs build code; it just uploads the jars.
@@ -119,3 +120,14 @@ jobs:
           cat dist/downloads.md >> notes.md
           gh release edit "$TAG" --notes-file notes.md
           gh release upload "$TAG" dist/*.jar --clobber
+
+  # Also publish the jars to Modrinth (skips itself until a MODRINTH_TOKEN secret exists).
+  modrinth:
+    needs: [release-please, publish]
+    permissions:
+      contents: read
+    uses: ./.github/workflows/modrinth.yml
+    with:
+      tag: ${{ needs.release-please.outputs.tag_name }}
+    secrets:
+      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
