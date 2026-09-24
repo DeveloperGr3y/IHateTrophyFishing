@@ -24,6 +24,8 @@ enum class ShowWhen(private val label: String) {
 /** Shared "should this display show right now?" rules for the Where / Show When settings. */
 object Visibility {
     fun allowed(where: ShowWhere, showWhen: ShowWhen, inInventory: Boolean): Boolean {
+        // Nothing shows outside SkyBlock, whatever the Where setting says (the GUI editor still shows everything).
+        if (!Location.onSkyBlock) return false
         if (where == ShowWhere.TROPHY_ISLANDS && !Location.onTrophyIsland) return false
         // With your inventory open it always shows, so the tracker's buttons can be reached.
         if (inInventory || showWhen == ShowWhen.ALWAYS) return true
