@@ -24,10 +24,12 @@ class HudEditScreen : Screen(Component.literal("Move IHateTrophyFishing displays
             val w = (element.width * pos.scale).toInt()
             val h = (element.height * pos.scale).toInt()
             val colour = if (element == hovered || element == dragging) -1 else 0xFF888888.toInt()
-            graphics.outline(pos.x - 1, pos.y - 1, w + 2, h + 2, colour)
+            val x = element.screenX
+            val y = element.screenY
+            graphics.outline(x - 1, y - 1, w + 2, h + 2, colour)
             if (element == hovered) {
                 val scale = String.format(Locale.ROOT, "%.1f", pos.scale)
-                graphics.text(font, "${element.label} (x$scale)", pos.x, pos.y + h + 3, 0xFFAAAAAA.toInt(), true)
+                graphics.text(font, "${element.label} (x$scale)", x, y + h + 3, 0xFFAAAAAA.toInt(), true)
             }
         }
         graphics.centeredText(font, "Drag to move · Scroll to resize · Esc to save", width / 2, 10, -1)
@@ -39,8 +41,8 @@ class HudEditScreen : Screen(Component.literal("Move IHateTrophyFishing displays
         val element = elementAt(event.x(), event.y())
         if (event.button() == 0 && element != null) {
             dragging = element
-            grabX = event.x() - element.position.x
-            grabY = event.y() - element.position.y
+            grabX = event.x() - element.screenX
+            grabY = event.y() - element.screenY
             return true
         }
         return super.mouseClicked(event, doubleClick)
@@ -51,6 +53,7 @@ class HudEditScreen : Screen(Component.literal("Move IHateTrophyFishing displays
         val pos = element.position
         val maxX = width - (element.width * pos.scale).toInt()
         val maxY = height - (element.height * pos.scale).toInt()
+        pos.centred = false // once dragged, it stays where you put it
         pos.x = (event.x() - grabX).toInt().coerceIn(0, maxOf(0, maxX))
         pos.y = (event.y() - grabY).toInt().coerceIn(0, maxOf(0, maxY))
         return true

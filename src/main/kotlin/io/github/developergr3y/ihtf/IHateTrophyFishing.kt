@@ -3,12 +3,16 @@ package io.github.developergr3y.ihtf
 import io.github.developergr3y.ihtf.config.ModConfig
 import io.github.developergr3y.ihtf.data.Period
 import io.github.developergr3y.ihtf.data.Storage
+import io.github.developergr3y.ihtf.features.Roulette
 import io.github.developergr3y.ihtf.features.SlugfishTimer
+import io.github.developergr3y.ihtf.features.Streak
 import io.github.developergr3y.ihtf.hud.HudEditScreen
 import io.github.developergr3y.ihtf.hud.HudManager
+import io.github.developergr3y.ihtf.hud.RouletteOverlay
 import io.github.developergr3y.ihtf.tracker.Tracker
 import io.github.developergr3y.ihtf.trophy.ChatListener
 import io.github.developergr3y.ihtf.trophy.MenuImport
+import io.github.developergr3y.ihtf.trophy.TrophyTier
 import io.github.developergr3y.ihtf.util.Compat
 import io.github.developergr3y.ihtf.util.Location
 import io.github.notenoughupdates.moulconfig.managed.ManagedConfig
@@ -61,6 +65,8 @@ object IHateTrophyFishing : ClientModInitializer {
             }
             Location.tick(client)
             Tracker.tick(client)
+            Streak.tick(client)
+            Roulette.tick()
             SlugfishTimer.tick(client)
             MenuImport.tick()
             Storage.tick()
@@ -75,6 +81,7 @@ object IHateTrophyFishing : ClientModInitializer {
         }
 
         HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, id("slugfish"), SlugfishTimer::render)
+        HudElementRegistry.addLast(id("roulette"), RouletteOverlay::render) // on top of everything
 
         ClientPlayConnectionEvents.DISCONNECT.register { _, _ -> Storage.save() }
         ClientLifecycleEvents.CLIENT_STOPPING.register { Storage.save() }
@@ -95,6 +102,21 @@ object IHateTrophyFishing : ClientModInitializer {
                             openHudEditor()
                             1
                         })
+                        .then(
+                            ClientCommands.literal("roulette")
+                                .executes {
+                                    Roulette.test(TrophyTier.DIAMOND)
+                                    1
+                                }
+                                .then(ClientCommands.literal("diamond").executes {
+                                    Roulette.test(TrophyTier.DIAMOND)
+                                    1
+                                })
+                                .then(ClientCommands.literal("gold").executes {
+                                    Roulette.test(TrophyTier.GOLD)
+                                    1
+                                }),
+                        )
                         .then(ClientCommands.literal("reset").executes {
                             Tracker.resetSession()
                             chat("Session reset.")

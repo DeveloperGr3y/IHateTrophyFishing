@@ -4,6 +4,8 @@ import io.github.developergr3y.ihtf.IHateTrophyFishing
 import io.github.developergr3y.ihtf.data.Period
 import io.github.developergr3y.ihtf.data.ProfileData
 import io.github.developergr3y.ihtf.data.Storage
+import io.github.developergr3y.ihtf.features.Roulette
+import io.github.developergr3y.ihtf.features.Streak
 import io.github.developergr3y.ihtf.hud.HudManager
 import io.github.developergr3y.ihtf.trophy.FishCounts
 import io.github.developergr3y.ihtf.trophy.Trophies
@@ -59,6 +61,8 @@ object Tracker {
         val profile = Storage.profile()
         profile.names[key] = displayName
         if (colour != null) profile.colours[key] = colour
+        // Checked before counting this catch: was it the first of this tier? (for the roulette's "first only")
+        val firstOfTier = (profile.lifetime[key]?.get(tier) ?: 0) == 0
         profile.lifetime.getOrPut(key) { FishCounts() }.add(tier, amount)
         profile.pity[key]?.onCatch(tier, amount)
         for (period in profile.activePeriods()) {
@@ -70,6 +74,8 @@ object Tracker {
         while (recentCatches.size > 500) recentCatches.removeFirst()
         Storage.markDirty()
         HudManager.refreshAll()
+        Streak.onCatch(tier, amount)
+        Roulette.onCatch(key, tier, firstOfTier)
     }
 
     fun tick(client: Minecraft) {
