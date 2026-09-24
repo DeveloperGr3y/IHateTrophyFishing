@@ -53,7 +53,13 @@ next to Fabric API. Kotlin and MoulConfig are bundled.
 
 Needs JDK 25. One codebase builds a jar per Minecraft version (via [Stonecutter](https://stonecutter.kikugie.dev/)),
 all in `build/libs/`. Version-specific code lives in `util/Compat.kt`.
-Pushing a `v*` tag builds and publishes a release.
+
+## Contributing
+
+Open a PR against `main` with a [Conventional Commit](https://www.conventionalcommits.org/) title, e.g.
+`feat: add a Golden Fish timer` or `fix: ignore guild chat`. `feat` bumps the minor version, `fix` the patch,
+and `feat!:` (breaking) the major. PRs are squash-merged, and [release-please](https://github.com/googleapis/release-please)
+turns them into a release PR with the changelog; merging that publishes the release with the jars attached.
 
 ## Credits
 
