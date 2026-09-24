@@ -39,7 +39,9 @@ yours. Can be limited to your first of each, or turned off. Try it with `/ihtf r
 <img src="docs/images/roulette.png" alt="Roulette" width="560">
 
 **Achievements.** 52 of them, from Common to Divine, that unlock as you fish: first Golds, long sessions, big
-streaks, full collections, and a few hidden ones. See them with `/ihtf achievements`.
+streaks, full collections, and a few hidden ones. The rarer the achievement, the bigger the moment: a quick
+chime for a Common, up to a drumroll, totem animation and confetti for the top tiers. See yours with
+`/ihtf achievements`, or preview the effects with `/ihtf testfx all`.
 
 **The small stuff.**
 - Only counts time you're actually fishing, so AFK doesn't wreck your rates.
@@ -58,6 +60,7 @@ streaks, full collections, and a few hidden ones. See them with `/ihtf achieveme
 | `/ihtf` | Settings |
 | `/ihtf gui` | Move and resize the displays |
 | `/ihtf achievements` | See your achievements |
+| `/ihtf testfx [rarity]` | Preview the achievement unlock effects |
 | `/ihtf reset` | Start a new session |
 | `/ihtf roulette [gold]` | Test the roulette |
 
