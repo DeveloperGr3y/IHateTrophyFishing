@@ -5,6 +5,7 @@ import io.github.developergr3y.ihtf.config.TrackerConfig
 import io.github.developergr3y.ihtf.data.Storage
 import io.github.developergr3y.ihtf.tracker.Tracker
 import io.github.developergr3y.ihtf.tracker.TrackerView
+import io.github.developergr3y.ihtf.trophy.SyncStatus
 import io.github.developergr3y.ihtf.trophy.Trophies
 import io.github.developergr3y.ihtf.trophy.pityStatuses
 import java.util.Locale
@@ -72,8 +73,9 @@ object TrackerHud : HudElement("Trophy Tracker") {
             if (hidden > 0) lines += HudLine("§8$hidden hidden (already have ${config.hideOwned.tierName})")
         }
 
-        if (caught.isNotEmpty() && caught.none { profile.pity.containsKey(it.key) }) {
-            lines += HudLine("§eOpen §6/pity §eonce to sync exact pity progress.")
+        // Spell out exactly what to open for any kind (fish / frogs) we don't have data for yet.
+        for (frog in caught.map { Trophies.isFrog(it.key) }.distinct()) {
+            SyncStatus.hints(profile, frog).forEach { lines += HudLine(it) }
         }
         return lines
     }

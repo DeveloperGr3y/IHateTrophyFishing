@@ -14,6 +14,12 @@ enum class TrophyTier(val colour: String) {
     val displayName get() = name.lowercase().replaceFirstChar { it.uppercase() }
     val formatted get() = "$colour$displayName"
 
+    val next get() = entries[(ordinal + 1) % entries.size]
+    val previous get() = entries[(ordinal + entries.size - 1) % entries.size]
+
+    // Shown in config dropdowns. (Saved configs use the enum name, so this doesn't affect them.)
+    override fun toString() = displayName
+
     companion object {
         fun fromName(raw: String): TrophyTier? = entries.firstOrNull { raw.trim().uppercase() == it.name }
     }
@@ -37,6 +43,9 @@ class TrophyInfo {
     /** Default pity thresholds (catches without that tier before the next one is guaranteed). */
     var goldPity = 100
     var diamondPity = 600
+
+    /** Short "where / how to catch it" hint, e.g. "Dojo" or "While it's raining". */
+    var hint = ""
 
     val isFrog get() = type == "frog"
 }
