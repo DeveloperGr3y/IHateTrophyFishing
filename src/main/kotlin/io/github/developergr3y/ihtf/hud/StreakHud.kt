@@ -7,6 +7,7 @@ import io.github.developergr3y.ihtf.util.Compat
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphicsExtractor
+import java.util.Locale
 import kotlin.math.sin
 import kotlin.random.Random
 
@@ -23,6 +24,7 @@ object StreakHud : HudElement("Streak") {
     private const val BREAK_MS = 2_500L
     private const val NEW_BEST_MS = 3_000L
     private const val PREVIEW_COUNT = 47
+    private const val CAPTION = "TROPHY STREAK"
 
     private val levelColours = intArrayOf(0xFFFFFFFF.toInt(), 0xFFFFFF55.toInt(), 0xFFFFAA00.toInt(), 0xFFFF5555.toInt())
     private val thresholds = listOf(10, 25, 50, 100, 250)
@@ -57,7 +59,7 @@ object StreakHud : HudElement("Streak") {
 
         val pose = graphics.pose()
         pose.pushMatrix()
-        pose.translate(position.x.toFloat(), position.y.toFloat())
+        pose.translate(screenX.toFloat(), screenY.toFloat())
         pose.scale(position.scale)
         if (!preview && isBreaking(now)) {
             drawBreak(graphics, font, now)
@@ -69,6 +71,13 @@ object StreakHud : HudElement("Streak") {
 
     private fun drawStreak(graphics: GuiGraphicsExtractor, font: Font, now: Long, count: Int, animate: Boolean) {
         val pose = graphics.pose()
+
+        // Small caption so it's obvious what the number is.
+        graphics.text(font, CAPTION, 0, 0, 0xFF888888.toInt(), true)
+        val top = font.lineHeight + 1
+        pose.pushMatrix()
+        pose.translate(0f, top.toFloat())
+
         val level = level(count)
         val text = "x$count"
         val scale = 2f + level * 0.25f
@@ -100,18 +109,25 @@ object StreakHud : HudElement("Streak") {
 
         if (animate && level >= 5) sparkles(graphics, font, now, right, (textHeight * scale).toInt())
 
+        // Under the number: a countdown when the streak is about to end, otherwise your best.
         val bestY = (textHeight * scale).toInt() + 3
-        val newBest = animate && now - Streak.newBestAt < NEW_BEST_MS
-        val bestLine = if (newBest) "NEW BEST!" else "Best: ${Streak.best}"
-        val bestColour = when {
-            !newBest -> 0xFFAAAAAA.toInt()
-            (now / 150) % 2 == 0L -> 0xFFFFAA00.toInt()
-            else -> 0xFFFFFFFF.toInt()
+        val remaining = Streak.GRACE_MS - (now - Streak.lastCatchAt)
+        val (line, colour) = when {
+            animate && remaining in 0..Streak.WARN_MS -> {
+                // Pulses faster as it runs out.
+                val flash = sin(now / (40.0 + remaining / 50.0)) > 0
+                "Ends in " + String.format(Locale.ROOT, "%.1fs", remaining / 1000.0) to
+                    (if (flash) 0xFFFF5555.toInt() else 0xFFFFAAAA.toInt())
+            }
+            animate && now - Streak.newBestAt < NEW_BEST_MS ->
+                "NEW BEST!" to (if ((now / 150) % 2 == 0L) 0xFFFFAA00.toInt() else 0xFFFFFFFF.toInt())
+            else -> "Best: ${Streak.best}" to 0xFFAAAAAA.toInt()
         }
-        graphics.text(font, bestLine, 0, bestY, bestColour, true)
+        graphics.text(font, line, 0, bestY, colour, true)
+        pose.popMatrix()
 
-        width = maxOf(right, font.width(bestLine))
-        height = bestY + font.lineHeight
+        width = maxOf(right, font.width(line), font.width(CAPTION))
+        height = top + bestY + font.lineHeight
     }
 
     private fun label(level: Int) = when {

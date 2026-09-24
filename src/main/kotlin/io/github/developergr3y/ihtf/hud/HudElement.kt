@@ -6,11 +6,16 @@ import io.github.developergr3y.ihtf.tracker.Tracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphicsExtractor
 
-/** Where a display sits on screen (in GUI pixels) and how big it is. Saved in the config. */
+/**
+ * Where a display sits on screen (in GUI pixels) and how big it is. Saved in the config.
+ * With [centred], it's centred horizontally and [y] pixels below the crosshair, whatever the window size;
+ * dragging it in the GUI editor switches it to a fixed position.
+ */
 class HudPosition(
     @Expose @JvmField var x: Int = 5,
     @Expose @JvmField var y: Int = 5,
     @Expose @JvmField var scale: Float = 1f,
+    @Expose @JvmField var centred: Boolean = false,
 )
 
 /**
@@ -34,6 +39,15 @@ class HudLine(
  */
 abstract class HudElement(val label: String) {
     abstract val position: HudPosition
+
+    /** Top-left corner on screen right now, in GUI pixels (works out "centred below the crosshair"). */
+    val screenX: Int
+        get() = if (position.centred) ((guiWidth() - width * position.scale) / 2).toInt() else position.x
+    val screenY: Int
+        get() = if (position.centred) guiHeight() / 2 + position.y else position.y
+
+    private fun guiWidth() = Minecraft.getInstance().window.guiScaledWidth
+    private fun guiHeight() = Minecraft.getInstance().window.guiScaledHeight
 
     /** Put this display back to its default position and size. */
     abstract fun resetPosition()
@@ -88,7 +102,7 @@ abstract class HudElement(val label: String) {
 
         val pose = graphics.pose()
         pose.pushMatrix()
-        pose.translate(position.x.toFloat(), position.y.toFloat())
+        pose.translate(screenX.toFloat(), screenY.toFloat())
         pose.scale(position.scale)
         lines.forEachIndexed { i, line ->
             val rowY = PADDING + i * lineHeight
@@ -115,13 +129,13 @@ abstract class HudElement(val label: String) {
         Minecraft.getInstance().font.lineHeight + if (IHateTrophyFishing.config.trackers.trophyFish.showIcons) 3 else 1
 
     fun contains(mouseX: Double, mouseY: Double) =
-        mouseX >= position.x && mouseY >= position.y &&
-            mouseX <= position.x + width * position.scale &&
-            mouseY <= position.y + height * position.scale
+        mouseX >= screenX && mouseY >= screenY &&
+            mouseX <= screenX + width * position.scale &&
+            mouseY <= screenY + height * position.scale
 
     private fun lineIndexAt(mouseX: Double, mouseY: Double): Int {
         if (!contains(mouseX, mouseY)) return -1
-        val localY = (mouseY - position.y) / position.scale - PADDING
+        val localY = (mouseY - screenY) / position.scale - PADDING
         val index = (localY / rowHeight()).toInt()
         return if (localY >= 0 && index in cached.indices) index else -1
     }

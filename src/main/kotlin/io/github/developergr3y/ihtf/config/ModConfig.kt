@@ -121,7 +121,8 @@ class StreakConfig {
     var sounds = true
 
     // Not shown as an option; set in GUI > Edit GUI Locations.
-    @Expose @JvmField var position = HudPosition(x = 200, y = 5)
+    // Centred, below the crosshair and below where the Slugfish timer's REEL! shows.
+    @Expose @JvmField var position = HudPosition(y = 45, centred = true)
 }
 
 class HelpersCategory {

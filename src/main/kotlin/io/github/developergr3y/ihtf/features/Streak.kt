@@ -24,6 +24,9 @@ object Streak {
     /** Below this the counter stays hidden, so it isn't flickering "x1" all the time. */
     const val SHOW_FROM = 3
 
+    /** In the last few seconds of the grace window, the display counts down (and ticks, if sounds are on). */
+    const val WARN_MS = 5_000L
+
     /** Streaks at least this long are posted to chat when they end. */
     const val ANNOUNCE_FROM = 10
 
@@ -49,6 +52,7 @@ object Streak {
     var newBestAt = 0L
         private set
     private var beatBestThisStreak = false
+    private var lastWarnSecond = -1L
 
     val best get() = Storage.profile().bestStreak
 
@@ -96,7 +100,22 @@ object Streak {
             return
         }
         val now = System.currentTimeMillis()
-        if (now - lastCatchAt > GRACE_MS) end(now)
+        if (now - lastCatchAt > GRACE_MS) {
+            end(now)
+            return
+        }
+
+        // Clock-like tick once a second while the streak is about to run out.
+        val remaining = GRACE_MS - (now - lastCatchAt)
+        if (count >= SHOW_FROM && remaining <= WARN_MS) {
+            val secondsLeft = (remaining + 999) / 1000
+            if (secondsLeft != lastWarnSecond) {
+                lastWarnSecond = secondsLeft
+                playSound("block.note_block.hat", 1.2f, 0.5f)
+            }
+        } else {
+            lastWarnSecond = -1
+        }
     }
 
     private fun end(now: Long) {
