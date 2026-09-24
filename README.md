@@ -23,6 +23,8 @@ roughly how long that'll take at your current pace. Sorted by rarity, with icons
 **Missing Trophies.** A to-do list of what you haven't caught yet, one tier at a time, with where to catch each
 one and how close you are to pity. Click the tiers with your inventory open to flick between them.
 
+<img src="docs/images/missing-trophies.png" alt="Missing Trophies" width="520">
+
 **Currently Targeting.** A second display listing everything you've caught in the last 10 minutes.
 Handy when you're stacking conditions for a few fish at once.
 
@@ -46,6 +48,10 @@ yours. Can be limited to your first of each, or turned off. Try it with `/ihtf r
 streaks, full collections, and a few hidden ones. The rarer the achievement, the bigger the moment: a quick
 chime for a Common, up to a drumroll, totem animation and confetti for the top tiers. See yours with
 `/ihtf achievements`, or preview the effects with `/ihtf testfx all`.
+
+<img src="docs/images/achievement-unlock.png" alt="Achievement unlocked banner" width="480">
+
+<img src="docs/images/achievements.png" alt="Achievements list" width="520">
 
 **The small stuff.**
 - Only counts time you're actually fishing, so AFK doesn't wreck your rates.
