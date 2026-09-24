@@ -8,7 +8,7 @@ import net.minecraft.sounds.SoundEvent
 import net.minecraft.util.Util
 
 object Sounds {
-    /** Every sound, playable in the browser (the same list SkyHanni links to). */
+    /** Every sound, playable in the browser. */
     private const val SOUND_LIST_URL = "https://misode.github.io/sounds/"
 
     /**

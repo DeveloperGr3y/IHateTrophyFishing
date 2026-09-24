@@ -80,7 +80,7 @@ object TrackerHud : HudElement("Trophy Tracker") {
         return lines
     }
 
-    /** Shown at the top while your inventory is open, like SkyHanni's trackers. */
+    /** Shown at the top while your inventory is open. */
     private fun buttons(view: TrackerView) = buildList {
         add(HudLine("§7[Click to show §a[${view.next}]§7]") {
             config.view = view.next

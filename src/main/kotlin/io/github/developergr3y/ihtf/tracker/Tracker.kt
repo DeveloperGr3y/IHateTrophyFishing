@@ -39,7 +39,7 @@ data class RecentCatch(val key: String, val tier: TrophyTier, val time: Long)
  * It can also be paused by hand from the tracker's inventory buttons.
  */
 object Tracker {
-    /** How long a newly caught fish stays highlighted green, like SkyHanni's trophy fish display. */
+    /** How long a newly caught fish stays highlighted green. */
     const val FLASH_MS = 5_000L
 
     private var lastActivity = 0L

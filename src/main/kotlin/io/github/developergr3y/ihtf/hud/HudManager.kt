@@ -12,7 +12,7 @@ import net.minecraft.resources.Identifier
 
 /**
  * Draws all displays. Normally they're part of the HUD; while your inventory or a chest is open they're
- * drawn on top of that screen instead (like SkyHanni), so their buttons can be clicked.
+ * drawn on top of that screen instead, so their buttons can be clicked.
  */
 object HudManager {
     val elements: List<HudElement> = listOf(TrackerHud, RecentCatchesHud, MissingHud, StreakHud)

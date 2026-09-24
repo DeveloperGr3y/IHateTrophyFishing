@@ -33,7 +33,7 @@ class ModConfig : Config() {
 
     override fun saveNow() = IHateTrophyFishing.saveConfig()
 
-    // Categories appear in this order, so GUI is first (like SkyHanni).
+    // Categories appear in this order, so GUI is first.
     @Expose
     @JvmField
     @Category(name = "GUI", desc = "Move and resize all on-screen displays (§e/ihtf gui§7).")
@@ -75,7 +75,7 @@ class GuiCategory {
     }
 }
 
-// Each feature is a sub-category (listed under its parent on the left, like SkyHanni), so new features slot in easily.
+// Each feature is a sub-category (listed under its parent on the left), so new features slot in easily.
 
 class TrackersCategory {
     @Expose

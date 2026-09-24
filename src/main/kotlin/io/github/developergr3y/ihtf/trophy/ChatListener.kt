@@ -11,7 +11,7 @@ import net.minecraft.network.chat.Component
  * Reads Hypixel's chat messages.
  *
  * We listen on ALLOW_GAME because Fabric gives every mod the *original* message there, before any mod
- * (e.g. SkyHanni's "You caught your 17th BRONZE Karate Fish" rewrite, or its bronze/duplicate hiders)
+ * (e.g. one that rewrites trophy messages, or hides bronze and duplicate catches)
  * changes or hides it. We always return true, so we never hide anything ourselves.
  */
 object ChatListener {
