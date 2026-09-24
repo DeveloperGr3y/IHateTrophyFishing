@@ -25,7 +25,7 @@ Handy when you're stacking conditions for a few fish at once.
 You can pick the sound.
 
 **Streaks.** An osu!-style counter for trophies caught in a row. Keep catching (one every 15 seconds) and it gets
-louder and flashier; when it ends you get a chat message with buttons to share it with your party or guild.
+louder and flashier; when it ends you get a chat message with buttons to share it in party, guild or all chat.
 Lives in the Dopamine Enhancers tab, which has a master switch if you'd rather not.
 
 **Roulette.** Catch a Gold or Diamond and a CS:GO-style case opening spins through trophy cards before landing on

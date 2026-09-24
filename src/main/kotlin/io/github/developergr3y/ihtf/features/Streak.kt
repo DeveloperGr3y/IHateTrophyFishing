@@ -133,7 +133,7 @@ object Streak {
         beatBestThisStreak = false
     }
 
-    /** Posts the finished streak to your own chat, with buttons that pre-fill /pc or /gc so you can share it. */
+    /** Posts the finished streak to your own chat, with buttons that pre-fill /pc, /gc or /ac so you can share it. */
     private fun announce() {
         val duration = formatDuration(lastCatchAt - startedAt)
         val rare = listOf(TrophyTier.GOLD, TrophyTier.DIAMOND)
@@ -150,6 +150,8 @@ object Streak {
             .append(shareButton("§d[Share to Party]", "/pc $shareText"))
             .append(Component.literal(" "))
             .append(shareButton("§2[Share to Guild]", "/gc $shareText"))
+            .append(Component.literal(" "))
+            .append(shareButton("§f[Share to All]", "/ac $shareText"))
         Compat.chat.addClientSystemMessage(message)
     }
 
