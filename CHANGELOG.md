@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/DeveloperGr3y/IHateTrophyFishing/compare/v0.1.0...v0.1.1) (2026-09-24)
+
+
+### Bug Fixes
+
+* save settings when the settings screen closes ([#7](https://github.com/DeveloperGr3y/IHateTrophyFishing/issues/7)) ([157b98d](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/157b98d2a499e4ecfe251068e0cd142524d55d84))
+
 ## 0.1.0 (2026-09-24)
 
 
