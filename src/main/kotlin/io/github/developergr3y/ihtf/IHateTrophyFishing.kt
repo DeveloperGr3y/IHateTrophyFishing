@@ -12,6 +12,7 @@ import io.github.developergr3y.ihtf.hud.RouletteOverlay
 import io.github.developergr3y.ihtf.tracker.Tracker
 import io.github.developergr3y.ihtf.trophy.ChatListener
 import io.github.developergr3y.ihtf.trophy.MenuImport
+import io.github.developergr3y.ihtf.trophy.SyncStatus
 import io.github.developergr3y.ihtf.trophy.TrophyTier
 import io.github.developergr3y.ihtf.util.Compat
 import io.github.developergr3y.ihtf.util.Location
@@ -117,6 +118,10 @@ object IHateTrophyFishing : ClientModInitializer {
                                     1
                                 }),
                         )
+                        .then(ClientCommands.literal("sync").executes {
+                            SyncStatus.report()
+                            1
+                        })
                         .then(ClientCommands.literal("reset").executes {
                             Tracker.resetSession()
                             chat("Session reset.")

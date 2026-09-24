@@ -27,7 +27,8 @@ class HudLine(
     val text: String,
     val iconKey: String? = null,
     val indent: Boolean = iconKey != null,
-    val onClick: (() -> Unit)? = null,
+    /** Called with the mouse button (0 = left, 1 = right). */
+    val onClick: ((Int) -> Unit)? = null,
 )
 
 /**
@@ -141,9 +142,9 @@ abstract class HudElement(val label: String) {
     }
 
     /** Runs the clicked line's action. Returns true if a button was clicked. */
-    fun click(mouseX: Double, mouseY: Double): Boolean {
+    fun click(mouseX: Double, mouseY: Double, button: Int = 0): Boolean {
         val action = cached.getOrNull(lineIndexAt(mouseX, mouseY))?.onClick ?: return false
-        action()
+        action(button)
         refresh()
         return true
     }
