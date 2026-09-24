@@ -25,6 +25,8 @@ one and how close you are to pity. Click the tiers with your inventory open to f
 
 <img src="docs/images/missing-trophies.png" alt="Missing Trophies" width="520">
 
+<img src="docs/images/missing-frogs.png" alt="Missing Trophies showing Diamond frogs" width="520">
+
 **Currently Targeting.** A second display listing everything you've caught in the last 10 minutes.
 Handy when you're stacking conditions for a few fish at once.
 
