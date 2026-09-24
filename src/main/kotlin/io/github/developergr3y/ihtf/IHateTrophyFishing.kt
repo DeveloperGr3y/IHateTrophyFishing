@@ -11,6 +11,7 @@ import io.github.developergr3y.ihtf.trophy.ChatListener
 import io.github.developergr3y.ihtf.trophy.MenuImport
 import io.github.developergr3y.ihtf.util.Compat
 import io.github.notenoughupdates.moulconfig.managed.ManagedConfig
+import io.github.notenoughupdates.moulconfig.platform.MoulConfigScreenComponent
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
 import net.fabricmc.fabric.api.client.command.v2.ClientCommands
@@ -19,6 +20,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements
+import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
@@ -63,6 +65,13 @@ object IHateTrophyFishing : ClientModInitializer {
         }
 
         HudManager.register()
+
+        // MoulConfig only saves when its editor hears the screen closed, and openConfigGui() never passes that on,
+        // so changes made in /ihtf were lost on restart. Save whenever our settings screen closes instead.
+        ScreenEvents.AFTER_INIT.register { _, screen, _, _ ->
+            if (screen is MoulConfigScreenComponent) ScreenEvents.remove(screen).register { saveConfig() }
+        }
+
         HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, id("slugfish"), SlugfishTimer::render)
 
         ClientPlayConnectionEvents.DISCONNECT.register { _, _ -> Storage.save() }
