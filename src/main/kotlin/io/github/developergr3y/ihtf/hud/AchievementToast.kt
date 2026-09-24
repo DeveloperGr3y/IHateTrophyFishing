@@ -2,7 +2,6 @@ package io.github.developergr3y.ihtf.hud
 
 import io.github.developergr3y.ihtf.IHateTrophyFishing
 import io.github.developergr3y.ihtf.features.achievements.Achievement
-import io.github.developergr3y.ihtf.features.achievements.AchievementList
 import io.github.developergr3y.ihtf.features.achievements.Rarity
 import io.github.developergr3y.ihtf.util.Sounds
 import net.minecraft.client.DeltaTracker
@@ -74,13 +73,6 @@ object AchievementToast {
     fun showSummary(count: Int, rarest: Achievement?) {
         if (config.popups) enqueue(Toast(null, count, rarest)) else sound("entity.player.levelup", 1f, 0.6f)
     }
-
-    /** /ihtf testfx: play the effects for a sample achievement of [rarity], ignoring the pop-ups setting. */
-    fun preview(rarity: Rarity) {
-        AchievementList.all.firstOrNull { it.rarity == rarity }?.let { enqueue(Toast(it)) }
-    }
-
-    fun previewSummary(count: Int) = enqueue(Toast(null, count, AchievementList.all.last { it.rarity == Rarity.LEGENDARY }))
 
     private fun enqueue(toast: Toast) {
         if (queue.size < 12) queue.addLast(toast)
