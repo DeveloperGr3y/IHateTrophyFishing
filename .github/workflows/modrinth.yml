@@ -1,0 +1,113 @@
+# Publishes a GitHub release's jars to Modrinth, one Modrinth version per Minecraft version.
+#
+#  - Runs automatically at the end of the Release workflow.
+#  - Or by hand for any existing release: Actions → Modrinth → Run workflow → tag (e.g. v0.2.0).
+#
+# Needs a MODRINTH_TOKEN repo secret (a Modrinth personal access token with "Read projects", "Read versions" and
+# "Create versions"). Without it, this skips itself.
+#
+# Security: this job runs no build code. It only downloads the finished jars from the GitHub release and uploads them
+# with curl, so the token is never exposed to Gradle plugins or dependencies. Versions already on Modrinth are skipped.
+name: Modrinth
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+    secrets:
+      MODRINTH_TOKEN:
+        required: false
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to publish, e.g. v0.2.0"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  modrinth:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      TAG: ${{ inputs.tag }}
+      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+      PROJECT: i-hate-trophy-fishing
+      FABRIC_API: P7dR8mSH # Modrinth project id of Fabric API
+      API: https://api.modrinth.com/v2
+      USER_AGENT: DeveloperGr3y/IHateTrophyFishing (github.com/DeveloperGr3y/IHateTrophyFishing)
+    steps:
+      - name: Check for a Modrinth token
+        id: check
+        run: |
+          if [ -z "$MODRINTH_TOKEN" ]; then
+            echo "::notice::No MODRINTH_TOKEN secret is set, so nothing was published to Modrinth."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download the release
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          mkdir dist
+          gh release download "$TAG" --pattern "*.jar" --dir dist
+          gh release view "$TAG" --json body --jq .body > changelog.md
+          ls -l dist
+
+      - name: Upload each jar as a Modrinth version
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          set -euo pipefail
+          auth=(-H "Authorization: $MODRINTH_TOKEN" -H "User-Agent: $USER_AGENT")
+
+          project_id=$(curl -sS --fail-with-body "${auth[@]}" "$API/project/$PROJECT" | jq -r .id)
+          existing=$(curl -sS --fail-with-body "${auth[@]}" "$API/project/$project_id/version" | jq -r '.[].version_number')
+          all_game_versions=$(curl -sS --fail-with-body -H "User-Agent: $USER_AGENT" "$API/tag/game_version")
+
+          for jar in dist/*.jar; do
+            file=$(basename "$jar")
+            version=${file#IHateTrophyFishing-}   # 0.2.0+mc26.1.jar
+            version=${version%.jar}               # 0.2.0+mc26.1
+            mc=${version##*+mc}                   # 26.1
+
+            if grep -qxF "$version" <<< "$existing"; then
+              echo "$version is already on Modrinth, skipping."
+              continue
+            fi
+
+            # Every full release of that Minecraft line, e.g. 26.1 -> 26.1, 26.1.1, 26.1.2.
+            game_versions=$(jq -c --arg mc "$mc" \
+              '[.[] | select(.version_type == "release") | .version | select(. == $mc or startswith($mc + "."))]' \
+              <<< "$all_game_versions")
+
+            jq -n \
+              --arg project_id "$project_id" \
+              --arg name "${version%%+*} for Minecraft $mc" \
+              --arg version "$version" \
+              --rawfile changelog changelog.md \
+              --argjson game_versions "$game_versions" \
+              --arg fabric_api "$FABRIC_API" \
+              '{
+                project_id: $project_id,
+                name: $name,
+                version_number: $version,
+                changelog: $changelog,
+                game_versions: $game_versions,
+                loaders: ["fabric"],
+                version_type: "release",
+                featured: true,
+                dependencies: [{project_id: $fabric_api, dependency_type: "required"}],
+                file_parts: ["file"],
+                primary_file: "file"
+              }' > data.json
+
+            echo "Publishing $version for $game_versions"
+            curl -sS --fail-with-body "${auth[@]}" \
+              -F "data=<data.json;type=application/json" \
+              -F "file=@$jar;type=application/java-archive" \
+              "$API/version" | jq '{id, version_number, game_versions}'
+          done
