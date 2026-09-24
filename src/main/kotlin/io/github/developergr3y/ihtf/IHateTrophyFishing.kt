@@ -6,7 +6,6 @@ import io.github.developergr3y.ihtf.data.Storage
 import io.github.developergr3y.ihtf.features.Roulette
 import io.github.developergr3y.ihtf.features.SlugfishTimer
 import io.github.developergr3y.ihtf.features.achievements.Achievements
-import io.github.developergr3y.ihtf.features.achievements.Rarity
 import io.github.developergr3y.ihtf.hud.AchievementToast
 import io.github.developergr3y.ihtf.hud.AchievementsScreen
 import io.github.developergr3y.ihtf.features.Streak
@@ -125,7 +124,6 @@ object IHateTrophyFishing : ClientModInitializer {
                                     1
                                 }),
                         )
-                        .then(testFxCommand())
                         .then(ClientCommands.literal("achievements").executes {
                             openAchievements()
                             1
@@ -142,24 +140,6 @@ object IHateTrophyFishing : ClientModInitializer {
                 )
             }
         }
-    }
-
-    /** /ihtf testfx <rarity|summary|all>: preview achievement unlock effects without unlocking anything. */
-    private fun testFxCommand() = ClientCommands.literal("testfx").also { root ->
-        for (rarity in Rarity.entries) {
-            root.then(ClientCommands.literal(rarity.name.lowercase()).executes {
-                AchievementToast.preview(rarity)
-                1
-            })
-        }
-        root.then(ClientCommands.literal("summary").executes {
-            AchievementToast.previewSummary(28)
-            1
-        })
-        root.then(ClientCommands.literal("all").executes {
-            Rarity.entries.forEach { AchievementToast.preview(it) }
-            1
-        })
     }
 
     fun openAchievements() {
