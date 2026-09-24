@@ -154,6 +154,43 @@ class DopamineCategory {
     @JvmField
     @Category(name = "Roulette", desc = "A slot-machine reel that always lands on your Gold or Diamond.")
     var roulette = RouletteConfig()
+
+    @Expose
+    @JvmField
+    @Category(name = "Achievements", desc = "52 achievements that unlock as you fish, from Common to Divine.")
+    var achievements = AchievementsConfig()
+}
+
+class AchievementsConfig {
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Enabled", desc = "Unlock achievements as you fish. See them with §e/ihtf achievements§7.")
+    @ConfigEditorBoolean
+    var enabled = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Pop-ups", desc = "Show a banner at the top of the screen when you unlock one.")
+    @ConfigEditorBoolean
+    var popups = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Chat Message", desc = "Post unlocks in your chat with buttons to share them.")
+    @ConfigEditorBoolean
+    var chat = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Sounds", desc = "Play a sound on unlock (grander for rarer ones).")
+    @ConfigEditorBoolean
+    var sounds = true
+
+    @Transient
+    @JvmField
+    @ConfigOption(name = "View Achievements", desc = "Open the list of achievements. Also: §e/ihtf achievements")
+    @ConfigEditorButton(buttonText = "Open")
+    val view = Runnable { IHateTrophyFishing.openAchievements() }
 }
 
 enum class RouletteMode(private val label: String) {
