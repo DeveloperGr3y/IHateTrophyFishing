@@ -28,6 +28,9 @@ You can pick the sound.
 louder and flashier; when it ends you get a chat message with buttons to share it with your party or guild.
 Lives in the Dopamine Enhancers tab, which has a master switch if you'd rather not.
 
+**Roulette.** Catch a Gold or Diamond and a CS:GO-style case opening spins through trophy cards before landing on
+yours. Can be limited to your first of each, or turned off. Try it with `/ihtf roulette`.
+
 **The small stuff.**
 - Only counts time you're actually fishing, so AFK doesn't wreck your rates.
 - Only shows up on the Crimson Isle and Lotus Atoll while you're fishing or holding a rod (configurable).
@@ -45,6 +48,7 @@ Lives in the Dopamine Enhancers tab, which has a master switch if you'd rather n
 | `/ihtf` | Settings |
 | `/ihtf gui` | Move and resize the displays |
 | `/ihtf reset` | Start a new session |
+| `/ihtf roulette [gold]` | Test the roulette |
 
 ## Installing
 

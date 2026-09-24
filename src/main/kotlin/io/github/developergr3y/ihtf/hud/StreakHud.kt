@@ -9,7 +9,6 @@ import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import java.util.Locale
 import kotlin.math.sin
-import kotlin.random.Random
 
 /**
  * The osu!-style streak counter. Gets flashier as the streak grows:
@@ -90,7 +89,7 @@ object StreakHud : HudElement("Streak") {
         // Pop, wobble and shake all happen around the centre of the number.
         pose.pushMatrix()
         pose.translate(textWidth * scale / 2, textHeight * scale / 2)
-        if (animate && level >= 5) pose.translate(shake(now, 1), shake(now, 2))
+        if (animate && level >= 5) pose.translate(Effects.shake(now, 1), Effects.shake(now, 2))
         if (animate && level >= 2) pose.rotate(sin(now / 110.0).toFloat() * 0.035f * (level - 1))
         pose.scale(scale * pop)
         pose.translate(-textWidth / 2, -textHeight / 2)
@@ -107,7 +106,7 @@ object StreakHud : HudElement("Streak") {
             right += (font.width(label) * 1.25f).toInt()
         }
 
-        if (animate && level >= 5) sparkles(graphics, font, now, right, (textHeight * scale).toInt())
+        if (animate && level >= 5) Effects.sparkles(graphics, font, now, right, (textHeight * scale).toInt())
 
         // Under the number: a countdown when the streak is about to end, otherwise your best.
         val bestY = (textHeight * scale).toInt() + 3
@@ -137,26 +136,7 @@ object StreakHud : HudElement("Streak") {
     }
 
     private fun drawColoured(graphics: GuiGraphicsExtractor, font: Font, text: String, level: Int, now: Long) {
-        if (level < 4) {
-            graphics.text(font, text, 0, 0, levelColours[level], true)
-            return
-        }
-        // Rainbow, one colour per letter, scrolling over time.
-        var x = 0
-        text.forEachIndexed { i, c ->
-            val letter = c.toString()
-            graphics.text(font, letter, x, 0, rainbow((now % 2000) / 2000f + i * 0.08f), true)
-            x += font.width(letter)
-        }
-    }
-
-    private fun sparkles(graphics: GuiGraphicsExtractor, font: Font, now: Long, width: Int, height: Int) {
-        val random = Random(now / 250)
-        repeat(4) {
-            val x = random.nextInt(-6, width + 6)
-            val y = random.nextInt(-8, height)
-            graphics.text(font, "✦", x, y, rainbow(random.nextFloat()), true)
-        }
+        if (level < 4) graphics.text(font, text, 0, 0, levelColours[level], true) else Effects.rainbowText(graphics, font, text, now)
     }
 
     private fun drawBreak(graphics: GuiGraphicsExtractor, font: Font, now: Long) {
@@ -179,24 +159,5 @@ object StreakHud : HudElement("Streak") {
 
         width = maxOf((font.width("COMBO BREAK") * 1.5f).toInt(), (font.width(countText) * 2.5f).toInt())
         height = y + (font.lineHeight * 2.5f).toInt()
-    }
-
-    private fun shake(now: Long, seed: Int) = (Random(now / 40 * 31 + seed).nextFloat() - 0.5f) * 3f
-
-    /** Hue (0-1, wraps) to a bright opaque colour. */
-    private fun rainbow(hue: Float): Int {
-        val h = ((hue % 1f) + 1f) % 1f * 6f
-        val f = h - h.toInt()
-        val (r, g, b) = when (h.toInt()) {
-            0 -> Triple(1f, f, 0f)
-            1 -> Triple(1f - f, 1f, 0f)
-            2 -> Triple(0f, 1f, f)
-            3 -> Triple(0f, 1f - f, 1f)
-            4 -> Triple(f, 0f, 1f)
-            else -> Triple(1f, 0f, 1f - f)
-        }
-        // Keep it pastel-bright so it reads on lava.
-        fun channel(v: Float) = (155 + v * 100).toInt()
-        return (0xFF shl 24) or (channel(r) shl 16) or (channel(g) shl 8) or channel(b)
     }
 }

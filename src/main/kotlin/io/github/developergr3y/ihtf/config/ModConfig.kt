@@ -102,6 +102,40 @@ class DopamineCategory {
     @JvmField
     @Category(name = "Streak", desc = "osu!-style counter for trophies caught in a row.")
     var streak = StreakConfig()
+
+    @Expose
+    @JvmField
+    @Category(name = "Roulette", desc = "A slot-machine reel that always lands on your Gold or Diamond.")
+    var roulette = RouletteConfig()
+}
+
+enum class RouletteMode(private val label: String) {
+    EVERY("Every one"),
+    FIRST_ONLY("First ones only"),
+    OFF("Off"),
+    ;
+
+    override fun toString() = label
+}
+
+class RouletteConfig {
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Diamonds", desc = "Spin on Diamond catches. First only skips duplicates. Test: §e/ihtf roulette")
+    @ConfigEditorDropdown
+    var diamonds = RouletteMode.EVERY
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Golds", desc = "A shorter spin on Gold catches. Test: §e/ihtf roulette gold")
+    @ConfigEditorDropdown
+    var golds = RouletteMode.EVERY
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Sounds", desc = "Reel ticks and the jackpot sound.")
+    @ConfigEditorBoolean
+    var sounds = true
 }
 
 class StreakConfig {
