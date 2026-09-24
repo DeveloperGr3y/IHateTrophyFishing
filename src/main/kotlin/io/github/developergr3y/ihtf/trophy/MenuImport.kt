@@ -101,11 +101,19 @@ object MenuImport {
             val existing = profile.lifetime[key]
             (existing == null || !existing.sameAs(value)).also { if (it) profile.lifetime[key] = value }
         }
+        val newlySynced = counts.keys.map { if (Trophies.isFrog(it)) "frog" else "fish" }.toSet() - profile.collectionsSynced
+        profile.collectionsSynced += newlySynced
         profile.pity.putAll(pity)
 
         Storage.markDirty()
         HudManager.refreshAll()
-        if (changedCounts > 0) IHateTrophyFishing.chat("Updated $changedCounts trophy counts from this menu.")
-        if (pity.isNotEmpty()) IHateTrophyFishing.chat("Synced pity progress for ${pity.size} trophies.")
+        for (kind in newlySynced) {
+            IHateTrophyFishing.chat("§aSynced which trophy ${if (kind == "frog") "frogs" else "fish"} you own ✔")
+        }
+        if (changedCounts > 0 && newlySynced.isEmpty()) IHateTrophyFishing.chat("Updated $changedCounts trophy counts.")
+        if (pity.isNotEmpty()) {
+            val kind = if (pity.keys.all { Trophies.isFrog(it) }) "trophy frog" else "trophy fish"
+            IHateTrophyFishing.chat("§aSynced $kind pity progress (${pity.size}) ✔")
+        }
     }
 }

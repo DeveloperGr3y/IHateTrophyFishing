@@ -7,7 +7,8 @@
   "colour": "§f",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/blobfish_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Anywhere"
  },
  {
   "key": "gusher",
@@ -17,7 +18,8 @@
   "colour": "§f",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/gusher_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "7-16 min after an eruption"
  },
  {
   "key": "obfuscated1",
@@ -27,7 +29,8 @@
   "colour": "§f",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/obfuscated_fish_1_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Corrupted Bait"
  },
  {
   "key": "steaminghotflounder",
@@ -37,7 +40,8 @@
   "colour": "§f",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/steaming_hot_flounder_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Next to a Geyser"
  },
  {
   "key": "sulphurskitter",
@@ -47,7 +51,8 @@
   "colour": "§f",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/sulphur_skitter_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Within 4 blocks of Sulphur"
  },
  {
   "key": "flyfish",
@@ -57,7 +62,8 @@
   "colour": "§a",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/flyfish_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "8+ blocks above, Blazing Volcano"
  },
  {
   "key": "obfuscated2",
@@ -67,7 +73,8 @@
   "colour": "§a",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/obfuscated_fish_2_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Obfuscated 1 as bait"
  },
  {
   "key": "slugfish",
@@ -77,7 +84,8 @@
   "colour": "§a",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/slugfish_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Bobber out 20s (10s with Slug)"
  },
  {
   "key": "lavahorse",
@@ -87,7 +95,8 @@
   "colour": "§9",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/lava_horse_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Anywhere"
  },
  {
   "key": "manaray",
@@ -97,7 +106,8 @@
   "colour": "§9",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/mana_ray_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "1,200+ Mana"
  },
  {
   "key": "obfuscated3",
@@ -107,7 +117,8 @@
   "colour": "§9",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/obfuscated_fish_3_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Obfuscated 2 as bait"
  },
  {
   "key": "vanille",
@@ -117,7 +128,8 @@
   "colour": "§9",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/vanille_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Starter Lava Rod"
  },
  {
   "key": "volcanicstonefish",
@@ -127,7 +139,8 @@
   "colour": "§9",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/volcanic_stonefish_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Blazing Volcano"
  },
  {
   "key": "karatefish",
@@ -137,7 +150,8 @@
   "colour": "§5",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/karate_fish_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Dojo"
  },
  {
   "key": "moldfin",
@@ -147,7 +161,8 @@
   "colour": "§5",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/moldfin_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Mystic Marsh"
  },
  {
   "key": "skeletonfish",
@@ -157,7 +172,8 @@
   "colour": "§5",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/skeleton_fish_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Burning Desert"
  },
  {
   "key": "soulfish",
@@ -167,7 +183,8 @@
   "colour": "§5",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/soul_fish_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Stronghold"
  },
  {
   "key": "goldenfish",
@@ -177,7 +194,8 @@
   "colour": "§6",
   "model": "hypixel_skyblock:item/fishing/trophy/lava/golden_fish_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "8+ min of lava fishing"
  },
  {
   "key": "commonfrog",
@@ -187,7 +205,8 @@
   "colour": "§f",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/common_frog_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Anywhere"
  },
  {
   "key": "explodingfrog",
@@ -197,7 +216,8 @@
   "colour": "§a",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/exploding_frog_bronze",
   "goldPity": 50,
-  "diamondPity": 300
+  "diamondPity": 300,
+  "hint": "Combine Lily Pads"
  },
  {
   "key": "leapfrog",
@@ -207,7 +227,8 @@
   "colour": "§a",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/leap_frog_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "While midair"
  },
  {
   "key": "realityhopper",
@@ -217,7 +238,8 @@
   "colour": "§a",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/reality_hopper_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "In a Wormhole"
  },
  {
   "key": "wetlandsfrog",
@@ -227,7 +249,8 @@
   "colour": "§a",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/wetlands_frog_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "While it's raining"
  },
  {
   "key": "blessedfrog",
@@ -237,7 +260,8 @@
   "colour": "§9",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/blessed_frog_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Active Frogcoin blessing"
  },
  {
   "key": "bullfrog",
@@ -247,7 +271,8 @@
   "colour": "§9",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/bullfrog_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Wearing a Red Sweater"
  },
  {
   "key": "seafrog",
@@ -257,7 +282,8 @@
   "colour": "§9",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/sea_frog_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "While underwater"
  },
  {
   "key": "cavefrog",
@@ -267,7 +293,8 @@
   "colour": "§5",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/cave_frog_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Lotus Eater's Cave"
  },
  {
   "key": "highlandsfrog",
@@ -277,7 +304,8 @@
   "colour": "§5",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/highlands_frog_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Lotus Highlands"
  },
  {
   "key": "treefrog",
@@ -287,7 +315,8 @@
   "colour": "§5",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/tree_frog_bronze",
   "goldPity": 100,
-  "diamondPity": 600
+  "diamondPity": 600,
+  "hint": "Standing on leaves"
  },
  {
   "key": "puddlejumper",
@@ -297,6 +326,7 @@
   "colour": "§6",
   "model": "hypixel_skyblock:item/fishing/trophy/frog/puddle_jumper_bronze",
   "goldPity": 50,
-  "diamondPity": 300
+  "diamondPity": 300,
+  "hint": "Flying around the Atoll"
  }
 ]

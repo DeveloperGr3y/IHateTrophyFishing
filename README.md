@@ -16,8 +16,12 @@ roughly how long that'll take at your current pace. Sorted by rarity, with icons
 
 <img src="docs/images/trophy-tracker.png" alt="Trophy Tracker" width="480">
 
-**Pity sync.** Open `/pity` once and the tracker uses Hypixel's own pity numbers. Open Odger (or
-Researcher Ribery for frogs) once and it knows what you've already caught.
+**Syncing your data.** Do each once and the mod remembers it (`/ihtf sync` shows what's left):
+- Fish pity: `/pity` → Crimson Isle. Frog pity: `/pity` → Lotus Atoll.
+- Which fish you own: talk to Odger (Trophy Fish). Which frogs you own: talk to Researcher Ribery.
+
+**Missing Trophies.** A to-do list of what you haven't caught yet, one tier at a time, with where to catch each
+one and how close you are to pity. Click the tiers with your inventory open to flick between them.
 
 **Currently Targeting.** A second display listing everything you've caught in the last 10 minutes.
 Handy when you're stacking conditions for a few fish at once.
@@ -54,6 +58,7 @@ yours. Can be limited to your first of each, or turned off. Try it with `/ihtf r
 |---|---|
 | `/ihtf` | Settings |
 | `/ihtf gui` | Move and resize the displays |
+| `/ihtf sync` | Show which trophy data still needs syncing |
 | `/ihtf reset` | Start a new session |
 | `/ihtf roulette [gold]` | Test the roulette |
 

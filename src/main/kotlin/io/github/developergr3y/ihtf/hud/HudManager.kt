@@ -15,7 +15,7 @@ import net.minecraft.resources.Identifier
  * drawn on top of that screen instead, so their buttons can be clicked.
  */
 object HudManager {
-    val elements: List<HudElement> = listOf(TrackerHud, RecentCatchesHud, StreakHud)
+    val elements: List<HudElement> = listOf(TrackerHud, RecentCatchesHud, MissingHud, StreakHud)
 
     fun refreshAll() = elements.forEach { it.refresh() }
 
@@ -43,8 +43,8 @@ object HudManager {
             }
 
             ScreenMouseEvents.allowMouseClick(screen).register { _, event ->
-                if (event.button() != 0) return@register true
-                val clicked = elements.any { it.isVisible(inInventory = true) && it.click(event.x(), event.y()) }
+                if (event.button() > 1) return@register true
+                val clicked = elements.any { it.isVisible(inInventory = true) && it.click(event.x(), event.y(), event.button()) }
                 !clicked // returning false stops the click reaching the inventory
             }
         }
