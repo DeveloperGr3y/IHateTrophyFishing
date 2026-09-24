@@ -8,7 +8,6 @@ import io.github.developergr3y.ihtf.trophy.Trophies
 import io.github.developergr3y.ihtf.trophy.TrophyTier
 import io.github.developergr3y.ihtf.util.Compat
 import io.github.developergr3y.ihtf.util.Share
-import io.github.developergr3y.ihtf.util.Sounds
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import java.time.LocalTime
@@ -165,8 +164,8 @@ object Achievements {
             newly.forEach { profile.achievements[it] = now }
             Storage.markDirty()
             IHateTrophyFishing.chat("§eUnlocked §f§l${newly.size} achievements§e from your existing progress! §7See them with §6/ihtf achievements")
-            if (config.popups) AchievementToast.showSummary(newly.size)
-            playSound(Rarity.RARE)
+            val rarest = newly.mapNotNull { AchievementList.byId[it] }.maxByOrNull { it.rarity }
+            AchievementToast.showSummary(newly.size, rarest)
         } else {
             newly.forEach { unlock(it) }
         }
@@ -179,29 +178,13 @@ object Achievements {
         profile.achievements[id] = System.currentTimeMillis()
         Storage.markDirty()
 
-        if (config.popups) AchievementToast.show(achievement)
-        playSound(achievement.rarity)
+        AchievementToast.show(achievement) // handles the pop-up and sounds (and their settings)
         if (config.chat) {
             val rarity = achievement.rarity
             val message = Component.literal(
                 "§6[IHTF] §eAchievement unlocked: ${rarity.colour}§l${achievement.name}§r §8(${rarity.label}) §7${achievement.description} ",
             ).append(Share.buttons("[IHTF] I unlocked ${achievement.name} (${rarity.label})! ${achievement.description}"))
             Compat.chat.addClientSystemMessage(message)
-        }
-    }
-
-    private fun playSound(rarity: Rarity) {
-        if (!config.sounds) return
-        when (rarity) {
-            Rarity.COMMON -> Sounds.play("entity.experience_orb.pickup", 1f, 0.8f)
-            Rarity.UNCOMMON -> Sounds.play("entity.experience_orb.pickup", 1.4f, 0.9f)
-            Rarity.RARE -> Sounds.play("entity.player.levelup", 1.2f, 0.8f)
-            Rarity.EPIC -> Sounds.play("entity.player.levelup", 0.9f, 0.9f)
-            Rarity.LEGENDARY, Rarity.MYTHIC -> Sounds.play("ui.toast.challenge_complete", 1f, 0.9f)
-            Rarity.DIVINE -> {
-                Sounds.play("ui.toast.challenge_complete", 1f, 1f)
-                Sounds.play("entity.firework_rocket.twinkle", 1f, 0.9f)
-            }
         }
     }
 
