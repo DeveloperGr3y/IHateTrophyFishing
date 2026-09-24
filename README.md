@@ -1,5 +1,8 @@
 # IHateTrophyFishing
 
+[![Downloads](https://img.shields.io/github/downloads/DeveloperGr3y/IHateTrophyFishing/total?label=downloads)](https://github.com/DeveloperGr3y/IHateTrophyFishing/releases)
+[![Latest release](https://img.shields.io/github/v/release/DeveloperGr3y/IHateTrophyFishing?label=release)](https://github.com/DeveloperGr3y/IHateTrophyFishing/releases/latest)
+
 A Fabric mod for Hypixel SkyBlock that tracks your Trophy Fish and Trophy Frogs and tells you how long
 you've got until pity. Works on its own, no other mods needed.
 
