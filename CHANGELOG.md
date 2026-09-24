@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.0](https://github.com/DeveloperGr3y/IHateTrophyFishing/compare/v0.1.1...v0.2.0) (2026-09-24)
+
+
+### Features
+
+* CS:GO-style roulette for Gold and Diamond catches (/ihtf roulette to test) ([b76b353](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/b76b353292d77415d5fc6129f81134ef909e219f))
+* Dopamine Enhancers tab with a master switch ([b76b353](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/b76b353292d77415d5fc6129f81134ef909e219f))
+* only show the trackers on trophy islands while fishing ([#6](https://github.com/DeveloperGr3y/IHateTrophyFishing/issues/6)) ([d01bf56](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/d01bf56bc1dc6ef3bcf5243151e0e1dfde878ed8))
+* osu-style trophy streaks with a countdown, personal best and shareable chat message ([b76b353](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/b76b353292d77415d5fc6129f81134ef909e219f))
+* Settings grouped into sub-categories with shorter descriptions ([b76b353](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/b76b353292d77415d5fc6129f81134ef909e219f))
+
 ## [0.1.1](https://github.com/DeveloperGr3y/IHateTrophyFishing/compare/v0.1.0...v0.1.1) (2026-09-24)
 
 
