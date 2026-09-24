@@ -15,7 +15,7 @@ import net.minecraft.resources.Identifier
  * drawn on top of that screen instead, so their buttons can be clicked.
  */
 object HudManager {
-    val elements: List<HudElement> = listOf(TrackerHud, RecentCatchesHud)
+    val elements: List<HudElement> = listOf(TrackerHud, RecentCatchesHud, StreakHud)
 
     fun refreshAll() = elements.forEach { it.refresh() }
 
