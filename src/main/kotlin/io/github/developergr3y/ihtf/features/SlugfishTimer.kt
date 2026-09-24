@@ -5,6 +5,7 @@ import io.github.developergr3y.ihtf.trophy.stripFormatting
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphicsExtractor
+import io.github.developergr3y.ihtf.util.Location
 import io.github.developergr3y.ihtf.util.Sounds
 import net.minecraft.util.CommonColors
 import net.minecraft.world.entity.Entity
@@ -45,7 +46,7 @@ object SlugfishTimer {
     fun tick(client: Minecraft) {
         playQueuedDings(client)
 
-        val hook = if (config.enabled) client.player?.fishing else null
+        val hook = if (config.enabled && Location.onSkyBlock) client.player?.fishing else null
 
         if (hook !== currentHook) {
             // New cast (or rod reeled in): reset everything.
