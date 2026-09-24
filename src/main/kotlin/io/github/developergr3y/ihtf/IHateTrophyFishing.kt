@@ -5,6 +5,10 @@ import io.github.developergr3y.ihtf.data.Period
 import io.github.developergr3y.ihtf.data.Storage
 import io.github.developergr3y.ihtf.features.Roulette
 import io.github.developergr3y.ihtf.features.SlugfishTimer
+import io.github.developergr3y.ihtf.features.achievements.Achievements
+import io.github.developergr3y.ihtf.features.achievements.Rarity
+import io.github.developergr3y.ihtf.hud.AchievementToast
+import io.github.developergr3y.ihtf.hud.AchievementsScreen
 import io.github.developergr3y.ihtf.features.Streak
 import io.github.developergr3y.ihtf.hud.HudEditScreen
 import io.github.developergr3y.ihtf.hud.HudManager
@@ -68,6 +72,8 @@ object IHateTrophyFishing : ClientModInitializer {
             Tracker.tick(client)
             Streak.tick(client)
             Roulette.tick()
+            Achievements.tick(client)
+            AchievementToast.tick()
             SlugfishTimer.tick(client)
             MenuImport.tick()
             Storage.tick()
@@ -83,6 +89,7 @@ object IHateTrophyFishing : ClientModInitializer {
 
         HudElementRegistry.attachElementBefore(VanillaHudElements.CHAT, id("slugfish"), SlugfishTimer::render)
         HudElementRegistry.addLast(id("roulette"), RouletteOverlay::render) // on top of everything
+        HudElementRegistry.addLast(id("achievement_toast"), AchievementToast::render)
 
         ClientPlayConnectionEvents.DISCONNECT.register { _, _ -> Storage.save() }
         ClientLifecycleEvents.CLIENT_STOPPING.register { Storage.save() }
@@ -118,6 +125,11 @@ object IHateTrophyFishing : ClientModInitializer {
                                     1
                                 }),
                         )
+                        .then(testFxCommand())
+                        .then(ClientCommands.literal("achievements").executes {
+                            openAchievements()
+                            1
+                        })
                         .then(ClientCommands.literal("sync").executes {
                             SyncStatus.report()
                             1
@@ -130,6 +142,28 @@ object IHateTrophyFishing : ClientModInitializer {
                 )
             }
         }
+    }
+
+    /** /ihtf testfx <rarity|summary|all>: preview achievement unlock effects without unlocking anything. */
+    private fun testFxCommand() = ClientCommands.literal("testfx").also { root ->
+        for (rarity in Rarity.entries) {
+            root.then(ClientCommands.literal(rarity.name.lowercase()).executes {
+                AchievementToast.preview(rarity)
+                1
+            })
+        }
+        root.then(ClientCommands.literal("summary").executes {
+            AchievementToast.previewSummary(28)
+            1
+        })
+        root.then(ClientCommands.literal("all").executes {
+            Rarity.entries.forEach { AchievementToast.preview(it) }
+            1
+        })
+    }
+
+    fun openAchievements() {
+        nextTick = { Compat.setScreen(AchievementsScreen()) }
     }
 
     fun openHudEditor() {
