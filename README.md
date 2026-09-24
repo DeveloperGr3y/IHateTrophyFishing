@@ -11,11 +11,15 @@ Minecraft 26.1.x and 26.2 · Fabric Loader 0.19.5+ · Fabric API · Java 25
 Anything you're still missing a Gold or Diamond of shows how many catches are left until pity and
 roughly how long that'll take at your current pace. Sorted by rarity, with icons and rarity colours.
 
+<img src="docs/images/trophy-tracker.png" alt="Trophy Tracker" width="480">
+
 **Pity sync.** Open `/pity` once and the tracker uses Hypixel's own pity numbers. Open Odger (or
 Researcher Ribery for frogs) once and it knows what you've already caught.
 
 **Currently Targeting.** A second display listing everything you've caught in the last 10 minutes.
 Handy when you're stacking conditions for a few fish at once.
+
+<img src="docs/images/currently-targeting.png" alt="Currently Targeting" width="400">
 
 **Slugfish timer.** Counts up from each cast and dings when a bite is late enough to be a Slugfish.
 You can pick the sound.
@@ -26,6 +30,8 @@ You can pick the sound.
 - Hide trophies you already have a Gold or Diamond of.
 - New catches flash green.
 - Move and resize everything from the GUI tab in `/ihtf`.
+
+<img src="docs/images/settings.png" alt="Settings" width="560">
 
 ## Commands
 
