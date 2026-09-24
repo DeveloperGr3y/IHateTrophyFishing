@@ -78,7 +78,7 @@ object Achievements {
         "gold_standard" to { it.ownsAll(fishKeys, TrophyTier.GOLD) },
         "all_frogged_up" to { it.ownsAll(frogKeys, TrophyTier.GOLD) },
         "lucky_day" to { p -> p.today().fish.values.sumOf { it[TrophyTier.DIAMOND] } >= 3 },
-        "why" to { it.total.totalCatches >= 100_000 },
+        "why" to { p -> p.lifetime.values.sumOf { it.total } >= 25_000 },
         "divine_fish" to { it.ownsAll(fishKeys, TrophyTier.DIAMOND) },
         "divine_frog" to { it.ownsAll(frogKeys, TrophyTier.DIAMOND) },
     )

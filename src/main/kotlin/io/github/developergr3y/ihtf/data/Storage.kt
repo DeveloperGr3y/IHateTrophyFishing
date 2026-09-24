@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose
 import io.github.developergr3y.ihtf.IHateTrophyFishing
 import io.github.developergr3y.ihtf.trophy.FishCounts
 import io.github.developergr3y.ihtf.trophy.PityProgress
+import io.github.developergr3y.ihtf.trophy.Trophies
 import net.minecraft.client.Minecraft
 import java.io.File
 import java.nio.file.Files
@@ -28,6 +29,15 @@ class ProfileData {
 
     /** Pity progress per trophy, read from Hypixel's /pity menu and kept up to date from catches. */
     @Expose var pity: MutableMap<String, PityProgress> = mutableMapOf()
+
+    /** Kinds ("fish" / "frog") whose collection menu (Odger / Researcher Ribery) has been read at least once. */
+    @Expose var collectionsSynced: MutableSet<String> = mutableSetOf()
+
+    /** Owned tiers are known once Odger's (fish) or Researcher Ribery's (frogs) menu has been opened. */
+    fun collectionSynced(frog: Boolean) = (if (frog) "frog" else "fish") in collectionsSynced
+
+    /** Pity is known once /pity's Crimson Isle (fish) or Lotus Atoll (frogs) section has been opened. */
+    fun pitySynced(frog: Boolean) = pity.keys.any { Trophies.isFrog(it) == frog }
 
     /** Fish id -> display name as Hypixel writes it. */
     @Expose var names: MutableMap<String, String> = mutableMapOf()

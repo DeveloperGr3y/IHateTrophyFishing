@@ -10,6 +10,7 @@ import io.github.developergr3y.ihtf.hud.ShowWhere
 import io.github.developergr3y.ihtf.tracker.Tracker
 import io.github.developergr3y.ihtf.tracker.TrackerView
 import io.github.developergr3y.ihtf.trophy.HideOwned
+import io.github.developergr3y.ihtf.trophy.TrophyTier
 import io.github.developergr3y.ihtf.util.Sounds
 import io.github.notenoughupdates.moulconfig.Config
 import io.github.notenoughupdates.moulconfig.annotations.Category
@@ -86,6 +87,52 @@ class TrackersCategory {
     @JvmField
     @Category(name = "Currently Targeting", desc = "Every trophy caught in the last few minutes.")
     var currentlyTargeting = CurrentlyTargetingConfig()
+
+    @Expose
+    @JvmField
+    @Category(name = "Missing Trophies", desc = "Which trophies you still need, one tier at a time.")
+    var missing = MissingConfig()
+}
+
+class MissingConfig {
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Enabled", desc = "Show the trophies you haven't caught yet for one tier.")
+    @ConfigEditorBoolean
+    var enabled = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Tier", desc = "Which tier to show. With your inventory open, click the tiers to change it.")
+    @ConfigEditorDropdown
+    var tier = TrophyTier.GOLD
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Show Hints", desc = "Show where or how to catch each one.")
+    @ConfigEditorBoolean
+    var showHints = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Show Pity", desc = "For Gold and Diamond, show catches left until pity.")
+    @ConfigEditorBoolean
+    var showPity = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Where", desc = "Only on the Crimson Isle and Lotus Atoll, or anywhere.")
+    @ConfigEditorDropdown
+    var where = ShowWhere.TROPHY_ISLANDS
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Show When", desc = "Only while fishing or holding a rod, or always. Shows with your inventory open.")
+    @ConfigEditorDropdown
+    var showWhen = ShowWhen.FISHING_OR_ROD
+
+    // Not shown as an option; set in GUI > Edit GUI Locations.
+    @Expose @JvmField var position = HudPosition(x = 5, y = 160)
 }
 
 class DopamineCategory {

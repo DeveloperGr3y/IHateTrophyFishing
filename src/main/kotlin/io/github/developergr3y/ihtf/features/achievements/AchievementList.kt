@@ -73,7 +73,7 @@ object AchievementList {
         Achievement("lucky_day", "Lucky Day", "Catch 3 Diamonds in one day.", Rarity.LEGENDARY),
         // Mythic
         Achievement("double_rainbow", "Double Rainbow", "Catch 2 Diamonds within 10 minutes.", Rarity.MYTHIC),
-        Achievement("why", "Why Are You Like This", "Catch 100,000 trophies with the mod.", Rarity.MYTHIC),
+        Achievement("why", "Why Are You Like This", "Catch 25,000 trophies (synced progress counts).", Rarity.MYTHIC),
         Achievement("glitch", "Glitch in the Matrix", "Reach a streak of 1,000.", Rarity.MYTHIC, hidden = true),
         // Divine
         Achievement("divine_fish", "I Hate Trophy Fishing", "Own every trophy fish at Diamond.", Rarity.DIVINE),
