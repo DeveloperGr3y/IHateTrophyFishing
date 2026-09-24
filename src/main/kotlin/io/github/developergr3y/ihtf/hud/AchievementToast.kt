@@ -9,9 +9,17 @@ import net.minecraft.client.gui.GuiGraphicsExtractor
 /** "Achievement unlocked" pop-up that slides down from the top of the screen. Several unlocks queue up. */
 object AchievementToast {
     private const val SLIDE_MS = 300L
-    private const val SHOW_MS = 4_000L
+    private const val SUMMARY_MS = 8_000L
 
-    private class Toast(val title: String, val name: String, val description: String, val rarity: Rarity) {
+    /** Rarer achievements stay up longer. */
+    private fun showMs(rarity: Rarity) = when (rarity) {
+        Rarity.COMMON, Rarity.UNCOMMON -> 6_000L
+        Rarity.RARE, Rarity.EPIC -> 7_000L
+        Rarity.LEGENDARY, Rarity.MYTHIC -> 9_000L
+        Rarity.DIVINE -> 12_000L
+    }
+
+    private class Toast(val title: String, val name: String, val description: String, val rarity: Rarity, val showMs: Long) {
         var startedAt = 0L
     }
 
@@ -19,11 +27,14 @@ object AchievementToast {
     private var current: Toast? = null
 
     fun show(achievement: Achievement) = enqueue(
-        Toast("ACHIEVEMENT UNLOCKED · ${achievement.rarity.label.uppercase()}", achievement.name, achievement.description, achievement.rarity),
+        Toast(
+            "ACHIEVEMENT UNLOCKED · ${achievement.rarity.label.uppercase()}", achievement.name, achievement.description,
+            achievement.rarity, showMs(achievement.rarity),
+        ),
     )
 
     fun showSummary(count: Int) = enqueue(
-        Toast("ACHIEVEMENTS UNLOCKED", "$count achievements", "From your existing progress. /ihtf achievements", Rarity.RARE),
+        Toast("ACHIEVEMENTS UNLOCKED", "$count achievements", "From your existing progress. /ihtf achievements", Rarity.RARE, SUMMARY_MS),
     )
 
     private fun enqueue(toast: Toast) {
@@ -33,7 +44,7 @@ object AchievementToast {
     fun render(graphics: GuiGraphicsExtractor, @Suppress("UNUSED_PARAMETER") deltaTracker: DeltaTracker) {
         val now = System.currentTimeMillis()
         var toast = current
-        if (toast == null || now - toast.startedAt > SHOW_MS) {
+        if (toast == null || now - toast.startedAt > toast.showMs) {
             toast = queue.removeFirstOrNull() ?: run {
                 current = null
                 return
@@ -47,7 +58,7 @@ object AchievementToast {
         // Slide in, hold, slide out.
         val slide = when {
             elapsed < SLIDE_MS -> elapsed.toFloat() / SLIDE_MS
-            elapsed > SHOW_MS - SLIDE_MS -> (SHOW_MS - elapsed).toFloat() / SLIDE_MS
+            elapsed > toast.showMs - SLIDE_MS -> (toast.showMs - elapsed).toFloat() / SLIDE_MS
             else -> 1f
         }.coerceIn(0f, 1f)
 
