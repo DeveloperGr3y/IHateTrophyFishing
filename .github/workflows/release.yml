@@ -1,0 +1,63 @@
+# Publishes a GitHub release when a version tag is pushed:
+#   git tag v0.2.0 && git push origin v0.2.0
+# Builds one jar per supported Minecraft version (see versions/*/gradle.properties) with the version taken
+# from the tag, and lists the supported versions in the release notes.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Read version from tag
+        run: echo "MOD_VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
+      - name: Build all Minecraft versions
+        run: |
+          chmod +x gradlew
+          ./gradlew build -Pmod_version="$MOD_VERSION" --stacktrace
+
+      - name: Write release notes
+        run: |
+          prop() { grep "^$1=" "$2" | cut -d= -f2-; }
+          loader=$(prop loader_version gradle.properties)
+          {
+            echo "## Supported versions"
+            echo
+            echo "| Minecraft | Download | Fabric API |"
+            echo "|---|---|---|"
+            for dir in versions/*/; do
+              v=$(basename "$dir")
+              props="$dir/gradle.properties"
+              echo "| $(prop minecraft_range "$props" | sed 's/^~//').x | \`IHateTrophyFishing-$MOD_VERSION+mc$v.jar\` | $(prop fabric_api_version "$props") or newer |"
+            done
+            echo
+            echo "Needs Fabric Loader $loader+, Fabric API and Java 25. Kotlin and MoulConfig are bundled; no other mods needed."
+            echo
+            echo "Pick the jar matching your Minecraft version and put it in your mods folder."
+            echo
+            echo "> This mod was written with AI assistance and isn't endorsed by Hypixel. Use at your own risk; see the README."
+          } > release-notes.md
+          cat release-notes.md
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: IHateTrophyFishing ${{ env.MOD_VERSION }}
+          body_path: release-notes.md
+          generate_release_notes: true
+          files: build/libs/*.jar

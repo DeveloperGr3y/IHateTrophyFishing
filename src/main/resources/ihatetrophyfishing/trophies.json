@@ -1,0 +1,302 @@
+[
+ {
+  "key": "blobfish",
+  "name": "Blobfish",
+  "type": "fish",
+  "rank": 0,
+  "colour": "§f",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/blobfish_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "gusher",
+  "name": "Gusher",
+  "type": "fish",
+  "rank": 0,
+  "colour": "§f",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/gusher_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "obfuscated1",
+  "name": "Obfuscated-1",
+  "type": "fish",
+  "rank": 0,
+  "colour": "§f",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/obfuscated_fish_1_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "steaminghotflounder",
+  "name": "Steaming-Hot Flounder",
+  "type": "fish",
+  "rank": 0,
+  "colour": "§f",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/steaming_hot_flounder_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "sulphurskitter",
+  "name": "Sulphur Skitter",
+  "type": "fish",
+  "rank": 0,
+  "colour": "§f",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/sulphur_skitter_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "flyfish",
+  "name": "Flyfish",
+  "type": "fish",
+  "rank": 1,
+  "colour": "§a",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/flyfish_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "obfuscated2",
+  "name": "Obfuscated-2",
+  "type": "fish",
+  "rank": 1,
+  "colour": "§a",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/obfuscated_fish_2_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "slugfish",
+  "name": "Slugfish",
+  "type": "fish",
+  "rank": 1,
+  "colour": "§a",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/slugfish_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "lavahorse",
+  "name": "Lavahorse",
+  "type": "fish",
+  "rank": 2,
+  "colour": "§9",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/lava_horse_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "manaray",
+  "name": "Mana Ray",
+  "type": "fish",
+  "rank": 2,
+  "colour": "§9",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/mana_ray_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "obfuscated3",
+  "name": "Obfuscated-3",
+  "type": "fish",
+  "rank": 2,
+  "colour": "§9",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/obfuscated_fish_3_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "vanille",
+  "name": "Vanille",
+  "type": "fish",
+  "rank": 2,
+  "colour": "§9",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/vanille_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "volcanicstonefish",
+  "name": "Volcanic Stonefish",
+  "type": "fish",
+  "rank": 2,
+  "colour": "§9",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/volcanic_stonefish_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "karatefish",
+  "name": "Karate Fish",
+  "type": "fish",
+  "rank": 3,
+  "colour": "§5",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/karate_fish_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "moldfin",
+  "name": "Moldfin",
+  "type": "fish",
+  "rank": 3,
+  "colour": "§5",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/moldfin_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "skeletonfish",
+  "name": "Skeleton Fish",
+  "type": "fish",
+  "rank": 3,
+  "colour": "§5",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/skeleton_fish_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "soulfish",
+  "name": "Soul Fish",
+  "type": "fish",
+  "rank": 3,
+  "colour": "§5",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/soul_fish_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "goldenfish",
+  "name": "Golden Fish",
+  "type": "fish",
+  "rank": 4,
+  "colour": "§6",
+  "model": "hypixel_skyblock:item/fishing/trophy/lava/golden_fish_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "commonfrog",
+  "name": "Common Frog",
+  "type": "frog",
+  "rank": 0,
+  "colour": "§f",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/common_frog_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "explodingfrog",
+  "name": "Exploding Frog",
+  "type": "frog",
+  "rank": 1,
+  "colour": "§a",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/exploding_frog_bronze",
+  "goldPity": 50,
+  "diamondPity": 300
+ },
+ {
+  "key": "leapfrog",
+  "name": "Leap Frog",
+  "type": "frog",
+  "rank": 1,
+  "colour": "§a",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/leap_frog_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "realityhopper",
+  "name": "Reality Hopper",
+  "type": "frog",
+  "rank": 1,
+  "colour": "§a",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/reality_hopper_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "wetlandsfrog",
+  "name": "Wetlands Frog",
+  "type": "frog",
+  "rank": 1,
+  "colour": "§a",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/wetlands_frog_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "blessedfrog",
+  "name": "Blessed Frog",
+  "type": "frog",
+  "rank": 2,
+  "colour": "§9",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/blessed_frog_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "bullfrog",
+  "name": "Bullfrog",
+  "type": "frog",
+  "rank": 2,
+  "colour": "§9",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/bullfrog_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "seafrog",
+  "name": "Sea Frog",
+  "type": "frog",
+  "rank": 2,
+  "colour": "§9",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/sea_frog_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "cavefrog",
+  "name": "Cave Frog",
+  "type": "frog",
+  "rank": 3,
+  "colour": "§5",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/cave_frog_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "highlandsfrog",
+  "name": "Highlands Frog",
+  "type": "frog",
+  "rank": 3,
+  "colour": "§5",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/highlands_frog_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "treefrog",
+  "name": "Tree Frog",
+  "type": "frog",
+  "rank": 3,
+  "colour": "§5",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/tree_frog_bronze",
+  "goldPity": 100,
+  "diamondPity": 600
+ },
+ {
+  "key": "puddlejumper",
+  "name": "Puddle Jumper",
+  "type": "frog",
+  "rank": 4,
+  "colour": "§6",
+  "model": "hypixel_skyblock:item/fishing/trophy/frog/puddle_jumper_bronze",
+  "goldPity": 50,
+  "diamondPity": 300
+ }
+]

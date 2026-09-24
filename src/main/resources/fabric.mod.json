@@ -1,0 +1,26 @@
+{
+	"schemaVersion": 1,
+	"id": "ihatetrophyfishing",
+	"version": "${version}",
+	"name": "IHateTrophyFishing",
+	"description": "Trophy fish and trophy frog tracker for Hypixel SkyBlock: catches per hour, pity counters and time until pity. Open the config with /ihtf.",
+	"authors": ["DeveloperGr3y"],
+	"license": "CC0-1.0",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			{
+				"adapter": "kotlin",
+				"value": "io.github.developergr3y.ihtf.IHateTrophyFishing"
+			}
+		]
+	},
+	"accessWidener": "ihatetrophyfishing.classtweaker",
+	"depends": {
+		"fabricloader": ">=${loader_version}",
+		"minecraft": "${minecraft_range}",
+		"java": ">=25",
+		"fabric-api": "*",
+		"fabric-language-kotlin": "*"
+	}
+}
