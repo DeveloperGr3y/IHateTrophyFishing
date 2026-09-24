@@ -21,7 +21,10 @@ object RecentCatchesHud : HudElement("Currently Targeting") {
         config.position = CurrentlyTargetingConfig().position
     }
 
-    override fun isVisible(inInventory: Boolean) = config.enabled
+    override val enabled get() = config.enabled
+
+    override fun isVisible(inInventory: Boolean) =
+        enabled && Visibility.allowed(config.where, config.showWhen, inInventory)
 
     override fun build(inInventory: Boolean): List<HudLine> {
         val now = System.currentTimeMillis()

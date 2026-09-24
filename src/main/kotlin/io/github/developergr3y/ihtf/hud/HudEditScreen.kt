@@ -13,7 +13,7 @@ class HudEditScreen : Screen(Component.literal("Move IHateTrophyFishing displays
     private var grabX = 0.0
     private var grabY = 0.0
 
-    private val editable get() = HudManager.elements.filter { it.isVisible(inInventory = true) }
+    private val editable get() = HudManager.elements.filter { it.enabled }
 
     override fun extractRenderState(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, delta: Float) {
         super.extractRenderState(graphics, mouseX, mouseY, delta)

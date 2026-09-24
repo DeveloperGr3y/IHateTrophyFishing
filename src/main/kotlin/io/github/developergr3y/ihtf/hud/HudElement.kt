@@ -38,6 +38,10 @@ abstract class HudElement(val label: String) {
     /** Put this display back to its default position and size. */
     abstract fun resetPosition()
 
+    /** Turned on in the config (the GUI editor shows every enabled display, wherever you are). */
+    abstract val enabled: Boolean
+
+    /** Enabled, and its Where / Show When settings allow it right now. */
     abstract fun isVisible(inInventory: Boolean): Boolean
 
     protected abstract fun build(inInventory: Boolean): List<HudLine>

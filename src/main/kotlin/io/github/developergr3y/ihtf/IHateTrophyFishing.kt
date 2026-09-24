@@ -10,6 +10,7 @@ import io.github.developergr3y.ihtf.tracker.Tracker
 import io.github.developergr3y.ihtf.trophy.ChatListener
 import io.github.developergr3y.ihtf.trophy.MenuImport
 import io.github.developergr3y.ihtf.util.Compat
+import io.github.developergr3y.ihtf.util.Location
 import io.github.notenoughupdates.moulconfig.managed.ManagedConfig
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigScreenComponent
 import net.fabricmc.api.ClientModInitializer
@@ -58,6 +59,7 @@ object IHateTrophyFishing : ClientModInitializer {
                 nextTick = null
                 it()
             }
+            Location.tick(client)
             Tracker.tick(client)
             SlugfishTimer.tick(client)
             MenuImport.tick()

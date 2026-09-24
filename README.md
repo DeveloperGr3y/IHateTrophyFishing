@@ -26,6 +26,7 @@ You can pick the sound.
 
 **The small stuff.**
 - Only counts time you're actually fishing, so AFK doesn't wreck your rates.
+- Only shows up on the Crimson Isle and Lotus Atoll while you're fishing or holding a rod (configurable).
 - Pause, reset or switch view by clicking the tracker with your inventory open.
 - Hide trophies you already have a Gold or Diamond of.
 - New catches flash green.

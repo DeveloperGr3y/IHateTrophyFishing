@@ -5,6 +5,8 @@ import io.github.developergr3y.ihtf.IHateTrophyFishing
 import io.github.developergr3y.ihtf.features.SlugfishTimer
 import io.github.developergr3y.ihtf.hud.HudManager
 import io.github.developergr3y.ihtf.hud.HudPosition
+import io.github.developergr3y.ihtf.hud.ShowWhen
+import io.github.developergr3y.ihtf.hud.ShowWhere
 import io.github.developergr3y.ihtf.tracker.Tracker
 import io.github.developergr3y.ihtf.tracker.TrackerView
 import io.github.developergr3y.ihtf.trophy.HideOwned
@@ -107,9 +109,23 @@ class TrackerConfig {
 
     @Expose
     @JvmField
-    @ConfigOption(name = "Only While Fishing", desc = "Hide the tracker unless you are fishing (or were within the AFK timeout). Always shown with your inventory open.")
-    @ConfigEditorBoolean
-    var onlyWhileFishing = false
+    @ConfigOption(
+        name = "Where",
+        desc = "Only show the tracker on the Crimson Isle and Lotus Atoll, or anywhere. If Hypixel's tab list has no " +
+            "Area line (tab widgets turned off), it counts as a trophy island.",
+    )
+    @ConfigEditorDropdown
+    var where = ShowWhere.TROPHY_ISLANDS
+
+    @Expose
+    @JvmField
+    @ConfigOption(
+        name = "Show When",
+        desc = "Show the tracker only while you're fishing or holding a rod, or always. " +
+            "It always shows with your inventory open, so its buttons can be reached.",
+    )
+    @ConfigEditorDropdown
+    var showWhen = ShowWhen.FISHING_OR_ROD
 
     @Expose
     @JvmField
@@ -198,6 +214,26 @@ class CurrentlyTargetingConfig {
     @ConfigOption(name = "Time Window", desc = "How many minutes back to look.")
     @ConfigEditorSlider(minValue = 1f, maxValue = 60f, minStep = 1f)
     var windowMinutes = 10
+
+    @Expose
+    @JvmField
+    @ConfigOption(
+        name = "Where",
+        desc = "Only show this display on the Crimson Isle and Lotus Atoll, or anywhere. If Hypixel's tab list has no " +
+            "Area line (tab widgets turned off), it counts as a trophy island.",
+    )
+    @ConfigEditorDropdown
+    var where = ShowWhere.TROPHY_ISLANDS
+
+    @Expose
+    @JvmField
+    @ConfigOption(
+        name = "Show When",
+        desc = "Show this display only while you're fishing or holding a rod, or always. " +
+            "It always shows with your inventory open, so its buttons can be reached.",
+    )
+    @ConfigEditorDropdown
+    var showWhen = ShowWhen.FISHING_OR_ROD
 
     @Expose
     @JvmField
