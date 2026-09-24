@@ -29,7 +29,7 @@ import io.github.notenoughupdates.moulconfig.common.text.StructuredText
  */
 class ModConfig : Config() {
     override fun getTitle(): StructuredText =
-        StructuredText.of("IHateTrophyFishing ${IHateTrophyFishing.version} §7(because someone has to)")
+        StructuredText.of("IHateTrophyFishing ${IHateTrophyFishing.version} §7by §bGr3y_VVolf §8(because someone has to)")
 
     override fun saveNow() = IHateTrophyFishing.saveConfig()
 
