@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.3.0](https://github.com/DeveloperGr3y/IHateTrophyFishing/compare/v0.2.0...v0.3.0) (2026-09-24)
+
+
+### Features
+
+* 52 achievements from Common to Divine, with /ihtf achievements to see them ([3e7d655](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/3e7d6558834b6143de0adbe32120e7d4e15f7bf6))
+* Achievement unlock effects that get bigger with rarity ([3e7d655](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/3e7d6558834b6143de0adbe32120e7d4e15f7bf6))
+* Clearer sync instructions and /ihtf sync to show what trophy data is missing ([fc7d621](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/fc7d621005de0dbe7753d643683f74487a7468cd))
+* Missing Trophies display showing what you still need for each tier, with catch hints and pity ([fc7d621](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/fc7d621005de0dbe7753d643683f74487a7468cd))
+
+
+### Bug Fixes
+
+* only show the mod's displays once you're in SkyBlock ([#15](https://github.com/DeveloperGr3y/IHateTrophyFishing/issues/15)) ([252c503](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/252c503eb020ce8a29058976f08c3c9bc5b0165e))
+
 ## [0.2.0](https://github.com/DeveloperGr3y/IHateTrophyFishing/compare/v0.1.1...v0.2.0) (2026-09-24)
 
 
