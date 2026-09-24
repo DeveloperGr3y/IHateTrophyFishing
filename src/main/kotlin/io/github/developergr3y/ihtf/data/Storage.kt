@@ -35,6 +35,9 @@ class ProfileData {
     /** Fish id -> item rarity colour code (e.g. "§5" for Epic), as seen in Hypixel's chat message or Odger's menu. */
     @Expose var colours: MutableMap<String, String> = mutableMapOf()
 
+    /** Longest trophy streak ever on this profile. */
+    @Expose var bestStreak = 0
+
     @Expose var session = Period()
     @Expose var days: MutableMap<String, Period> = mutableMapOf()
     @Expose var total = Period()

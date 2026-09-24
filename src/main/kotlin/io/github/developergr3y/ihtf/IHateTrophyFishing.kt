@@ -4,6 +4,7 @@ import io.github.developergr3y.ihtf.config.ModConfig
 import io.github.developergr3y.ihtf.data.Period
 import io.github.developergr3y.ihtf.data.Storage
 import io.github.developergr3y.ihtf.features.SlugfishTimer
+import io.github.developergr3y.ihtf.features.Streak
 import io.github.developergr3y.ihtf.hud.HudEditScreen
 import io.github.developergr3y.ihtf.hud.HudManager
 import io.github.developergr3y.ihtf.tracker.Tracker
@@ -61,6 +62,7 @@ object IHateTrophyFishing : ClientModInitializer {
             }
             Location.tick(client)
             Tracker.tick(client)
+            Streak.tick(client)
             SlugfishTimer.tick(client)
             MenuImport.tick()
             Storage.tick()

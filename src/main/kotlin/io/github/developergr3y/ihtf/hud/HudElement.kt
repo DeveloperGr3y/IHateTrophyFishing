@@ -53,9 +53,9 @@ abstract class HudElement(val label: String) {
 
     /** Size of the last drawn display, in unscaled pixels. */
     var width = 0
-        private set
+        protected set
     var height = 0
-        private set
+        protected set
 
     fun refresh() {
         needsRebuild = true
@@ -74,7 +74,8 @@ abstract class HudElement(val label: String) {
         return cached
     }
 
-    fun draw(graphics: GuiGraphicsExtractor, inInventory: Boolean, mouseX: Double = -1.0, mouseY: Double = -1.0) {
+    /** Draws the text lines from [build]. Displays with their own animations (e.g. the streak counter) override this. */
+    open fun draw(graphics: GuiGraphicsExtractor, inInventory: Boolean, mouseX: Double = -1.0, mouseY: Double = -1.0) {
         val font = Minecraft.getInstance().font
         val lines = lines(inInventory)
         val lineHeight = rowHeight()

@@ -4,6 +4,7 @@ import io.github.developergr3y.ihtf.IHateTrophyFishing
 import io.github.developergr3y.ihtf.data.Period
 import io.github.developergr3y.ihtf.data.ProfileData
 import io.github.developergr3y.ihtf.data.Storage
+import io.github.developergr3y.ihtf.features.Streak
 import io.github.developergr3y.ihtf.hud.HudManager
 import io.github.developergr3y.ihtf.trophy.FishCounts
 import io.github.developergr3y.ihtf.trophy.Trophies
@@ -70,6 +71,7 @@ object Tracker {
         while (recentCatches.size > 500) recentCatches.removeFirst()
         Storage.markDirty()
         HudManager.refreshAll()
+        Streak.onCatch(tier, amount)
     }
 
     fun tick(client: Minecraft) {

@@ -48,6 +48,11 @@ class ModConfig : Config() {
     @JvmField
     @Category(name = "Fishing Helpers", desc = "Timers and alerts that help you catch specific trophy fish.")
     var helpers = HelpersCategory()
+
+    @Expose
+    @JvmField
+    @Category(name = "Dopamine Enhancers", desc = "Silly extras to make trophy fishing a bit less soul-destroying.")
+    var dopamine = DopamineCategory()
 }
 
 class GuiCategory {
@@ -84,6 +89,46 @@ class TrackersCategory {
     @ConfigOption(name = "Currently Targeting", desc = "Lists every trophy fish or frog caught in the last few minutes.")
     @Accordion
     var currentlyTargeting = CurrentlyTargetingConfig()
+}
+
+class DopamineCategory {
+    @Expose
+    @JvmField
+    @ConfigOption(
+        name = "Enable Dopamine Enhancers",
+        desc = "Master switch for everything in this tab. Turn it off to keep the mod strictly business.",
+    )
+    @ConfigEditorBoolean
+    var enabled = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Streak", desc = "osu!-style trophy streak counter.")
+    @Accordion
+    var streak = StreakConfig()
+}
+
+class StreakConfig {
+    @Expose
+    @JvmField
+    @ConfigOption(
+        name = "Enabled",
+        desc = "Count trophies caught in a row. Your streak keeps going as long as the next trophy comes within " +
+            "15 seconds; the bigger it gets, the flashier the counter. When it ends, streaks of 10+ are posted to " +
+            "your chat (only you see it) with buttons to share them with your party or guild. The rules are the " +
+            "same for everyone, so streaks are comparable.",
+    )
+    @ConfigEditorBoolean
+    var enabled = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Sounds", desc = "A rising hit sound on each catch, jingles at milestones and a combo-break sound.")
+    @ConfigEditorBoolean
+    var sounds = true
+
+    // Not shown as an option; set in GUI > Edit GUI Locations.
+    @Expose @JvmField var position = HudPosition(x = 200, y = 5)
 }
 
 class HelpersCategory {

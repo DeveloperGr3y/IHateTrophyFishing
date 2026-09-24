@@ -24,6 +24,10 @@ Handy when you're stacking conditions for a few fish at once.
 **Slugfish timer.** Counts up from each cast and dings when a bite is late enough to be a Slugfish.
 You can pick the sound.
 
+**Streaks.** An osu!-style counter for trophies caught in a row. Keep catching (one every 15 seconds) and it gets
+louder and flashier; when it ends you get a chat message with buttons to share it with your party or guild.
+Lives in the Dopamine Enhancers tab, which has a master switch if you'd rather not.
+
 **The small stuff.**
 - Only counts time you're actually fishing, so AFK doesn't wreck your rates.
 - Only shows up on the Crimson Isle and Lotus Atoll while you're fishing or holding a rod (configurable).
