@@ -12,7 +12,6 @@ import io.github.developergr3y.ihtf.tracker.TrackerView
 import io.github.developergr3y.ihtf.trophy.HideOwned
 import io.github.developergr3y.ihtf.util.Sounds
 import io.github.notenoughupdates.moulconfig.Config
-import io.github.notenoughupdates.moulconfig.annotations.Accordion
 import io.github.notenoughupdates.moulconfig.annotations.Category
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorBoolean
 import io.github.notenoughupdates.moulconfig.annotations.ConfigEditorButton
@@ -60,7 +59,7 @@ class GuiCategory {
     @JvmField
     @ConfigOption(
         name = "Edit GUI Locations",
-        desc = "Opens an editor showing every display: drag one to move it, scroll over it to resize. Also: §e/ihtf gui",
+        desc = "Drag displays to move them, scroll to resize. Also: §e/ihtf gui",
     )
     @ConfigEditorButton(buttonText = "Edit")
     val edit = Runnable { IHateTrophyFishing.openHudEditor() }
@@ -75,19 +74,17 @@ class GuiCategory {
     }
 }
 
-// Each category holds one collapsible section (@Accordion) per feature, so new features slot in as new sections.
+// Each feature is a sub-category (listed under its parent on the left, like SkyHanni), so new features slot in easily.
 
 class TrackersCategory {
     @Expose
     @JvmField
-    @ConfigOption(name = "Trophy Tracker", desc = "Trophy fish and trophy frogs: catches per hour, pity counts and time until pity.")
-    @Accordion
+    @Category(name = "Trophy Tracker", desc = "Catches per hour, pity counts and time until pity.")
     var trophyFish = TrackerConfig()
 
     @Expose
     @JvmField
-    @ConfigOption(name = "Currently Targeting", desc = "Lists every trophy fish or frog caught in the last few minutes.")
-    @Accordion
+    @Category(name = "Currently Targeting", desc = "Every trophy caught in the last few minutes.")
     var currentlyTargeting = CurrentlyTargetingConfig()
 }
 
@@ -96,15 +93,14 @@ class DopamineCategory {
     @JvmField
     @ConfigOption(
         name = "Enable Dopamine Enhancers",
-        desc = "Master switch for everything in this tab. Turn it off to keep the mod strictly business.",
+        desc = "Master switch for everything in this tab. Off keeps the mod strictly business.",
     )
     @ConfigEditorBoolean
     var enabled = true
 
     @Expose
     @JvmField
-    @ConfigOption(name = "Streak", desc = "osu!-style trophy streak counter.")
-    @Accordion
+    @Category(name = "Streak", desc = "osu!-style counter for trophies caught in a row.")
     var streak = StreakConfig()
 }
 
@@ -113,17 +109,14 @@ class StreakConfig {
     @JvmField
     @ConfigOption(
         name = "Enabled",
-        desc = "Count trophies caught in a row. Your streak keeps going as long as the next trophy comes within " +
-            "15 seconds; the bigger it gets, the flashier the counter. When it ends, streaks of 10+ are posted to " +
-            "your chat (only you see it) with buttons to share them with your party or guild. The rules are the " +
-            "same for everyone, so streaks are comparable.",
+        desc = "Trophies in a row (one every 15s keeps it alive). 10+ posts a shareable chat message.",
     )
     @ConfigEditorBoolean
     var enabled = true
 
     @Expose
     @JvmField
-    @ConfigOption(name = "Sounds", desc = "A rising hit sound on each catch, jingles at milestones and a combo-break sound.")
+    @ConfigOption(name = "Sounds", desc = "Hit sounds, milestone jingles and a combo-break sound.")
     @ConfigEditorBoolean
     var sounds = true
 
@@ -134,8 +127,7 @@ class StreakConfig {
 class HelpersCategory {
     @Expose
     @JvmField
-    @ConfigOption(name = "Slugfish Timer", desc = "Tells you when a bite is late enough to count for a Slugfish.")
-    @Accordion
+    @Category(name = "Slugfish Timer", desc = "Alerts when a bite is late enough to count for a Slugfish.")
     var slugfish = SlugfishConfig()
 }
 
@@ -148,7 +140,7 @@ class TrackerConfig {
 
     @Expose
     @JvmField
-    @ConfigOption(name = "View", desc = "Which catches the tracker counts: this session, today, or all time.")
+    @ConfigOption(name = "View", desc = "Count this session, today, or all time.")
     @ConfigEditorDropdown
     var view = TrackerView.SESSION
 
@@ -156,8 +148,7 @@ class TrackerConfig {
     @JvmField
     @ConfigOption(
         name = "Where",
-        desc = "Only show the tracker on the Crimson Isle and Lotus Atoll, or anywhere. If Hypixel's tab list has no " +
-            "Area line (tab widgets turned off), it counts as a trophy island.",
+        desc = "Only on the Crimson Isle and Lotus Atoll, or anywhere.",
     )
     @ConfigEditorDropdown
     var where = ShowWhere.TROPHY_ISLANDS
@@ -166,8 +157,7 @@ class TrackerConfig {
     @JvmField
     @ConfigOption(
         name = "Show When",
-        desc = "Show the tracker only while you're fishing or holding a rod, or always. " +
-            "It always shows with your inventory open, so its buttons can be reached.",
+        desc = "Only while fishing or holding a rod, or always. Shows with your inventory open.",
     )
     @ConfigEditorDropdown
     var showWhen = ShowWhen.FISHING_OR_ROD
@@ -176,15 +166,14 @@ class TrackerConfig {
     @JvmField
     @ConfigOption(
         name = "Hide Owned",
-        desc = "Hide trophies you've already caught a Gold (or Diamond) of, e.g. to only see what's left while going " +
-            "for Golds. Totals still count everything. Uses your all-time counts, so open Odger's menu once first.",
+        desc = "Hide trophies you already have a Gold (or Diamond) of. Totals still count them.",
     )
     @ConfigEditorDropdown
     var hideOwned = HideOwned.OFF
 
     @Expose
     @JvmField
-    @ConfigOption(name = "Show Diamond Pity", desc = "Also show Diamond pity for fish that are still missing Gold. Otherwise only the next pity is shown.")
+    @ConfigOption(name = "Show Diamond Pity", desc = "Also show Diamond pity for fish still missing a Gold.")
     @ConfigEditorBoolean
     var showBothPities = false
 
@@ -192,7 +181,7 @@ class TrackerConfig {
     @JvmField
     @ConfigOption(
         name = "Show Icons",
-        desc = "Show each trophy's icon (needs Hypixel's server resource pack, which is on by default).",
+        desc = "Show each trophy's icon (needs Hypixel's resource pack).",
     )
     @ConfigEditorBoolean
     var showIcons = true
@@ -201,8 +190,7 @@ class TrackerConfig {
     @JvmField
     @ConfigOption(
         name = "Count Water Fishing",
-        desc = "Count time with your bobber in water as active time too (needed for Trophy Frogs). " +
-            "Turn off if you water fish elsewhere and don't want that time in your rates.",
+        desc = "Count time with your bobber in water too (needed for Trophy Frogs).",
     )
     @ConfigEditorBoolean
     var countWaterFishing = true
@@ -211,7 +199,7 @@ class TrackerConfig {
     @JvmField
     @ConfigOption(
         name = "AFK Timeout",
-        desc = "Seconds without your bobber in lava (or water) before the tracker's clock pauses. Paused time doesn't count towards catches per hour.",
+        desc = "Seconds without fishing before the clock pauses. Paused time isn't in your rates.",
     )
     @ConfigEditorSlider(minValue = 10f, maxValue = 300f, minStep = 5f)
     var afkTimeoutSeconds = 60
@@ -235,7 +223,7 @@ class TrackerConfig {
     @JvmField
     @ConfigOption(
         name = "Refresh Interval",
-        desc = "Seconds between updates of the displays' numbers. Catches, view changes and resets still show straight away.",
+        desc = "Seconds between number updates. Catches and clicks show straight away.",
     )
     @ConfigEditorSlider(minValue = 1f, maxValue = 30f, minStep = 1f)
     var refreshSeconds = 10
@@ -249,7 +237,7 @@ class CurrentlyTargetingConfig {
     @JvmField
     @ConfigOption(
         name = "Enabled",
-        desc = "Show every trophy caught in the last few minutes, so you can see which ones you're getting while stacking conditions.",
+        desc = "Show every trophy caught in the last few minutes.",
     )
     @ConfigEditorBoolean
     var enabled = true
@@ -264,8 +252,7 @@ class CurrentlyTargetingConfig {
     @JvmField
     @ConfigOption(
         name = "Where",
-        desc = "Only show this display on the Crimson Isle and Lotus Atoll, or anywhere. If Hypixel's tab list has no " +
-            "Area line (tab widgets turned off), it counts as a trophy island.",
+        desc = "Only on the Crimson Isle and Lotus Atoll, or anywhere.",
     )
     @ConfigEditorDropdown
     var where = ShowWhere.TROPHY_ISLANDS
@@ -274,8 +261,7 @@ class CurrentlyTargetingConfig {
     @JvmField
     @ConfigOption(
         name = "Show When",
-        desc = "Show this display only while you're fishing or holding a rod, or always. " +
-            "It always shows with your inventory open, so its buttons can be reached.",
+        desc = "Only while fishing or holding a rod, or always. Shows with your inventory open.",
     )
     @ConfigEditorDropdown
     var showWhen = ShowWhen.FISHING_OR_ROD
@@ -284,7 +270,7 @@ class CurrentlyTargetingConfig {
     @JvmField
     @ConfigOption(
         name = "Hide Owned",
-        desc = "Hide trophies you've already caught a Gold (or Diamond) of. Uses your all-time counts, so open Odger's menu once first.",
+        desc = "Hide trophies you already have a Gold (or Diamond) of.",
     )
     @ConfigEditorDropdown
     var hideOwned = HideOwned.OFF
@@ -298,8 +284,7 @@ class SlugfishConfig {
     @JvmField
     @ConfigOption(
         name = "Enabled",
-        desc = "After you cast, count up to the Slugfish time. A bite after that plays a ding and shows REEL!. " +
-            "Bites before it are ignored because they can't be a Slugfish.",
+        desc = "Counts up from each cast; a bite after the timer dings and shows REEL!",
     )
     @ConfigEditorBoolean
     var enabled = true
@@ -314,8 +299,7 @@ class SlugfishConfig {
     @JvmField
     @ConfigOption(
         name = "Alert Sound",
-        desc = "The sound played when a bite counts, e.g. §eblock.note_block.bell§7 or §eentity.experience_orb.pickup§7. " +
-            "Use §eList of Sounds§7 to find and listen to one.",
+        desc = "Sound name, e.g. §eblock.note_block.bell§7. Find one with §eList of Sounds§7.",
     )
     @ConfigEditorText
     var sound = "block.note_block.bell"
@@ -334,7 +318,7 @@ class SlugfishConfig {
 
     @Transient
     @JvmField
-    @ConfigOption(name = "List of Sounds", desc = "Opens a website in your browser where you can play every Minecraft sound and copy its name.")
+    @ConfigOption(name = "List of Sounds", desc = "Opens a site where you can play every sound and copy its name.")
     @ConfigEditorButton(buttonText = "Open")
     val listOfSounds = Runnable { Sounds.openSoundList() }
 }
