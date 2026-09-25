@@ -44,6 +44,8 @@ object OddsHud : HudElement("Trophy Odds") {
             lines += HudLine("§8In a Wormhole: ${gold.colour}${short(wormhole.gold)} §8· ${diamond.colour}${short(wormhole.diamond)}")
         }
 
+        if (config.showSwapTips) TrophyOdds.swapTip(frog)?.let { lines += HudLine("§8Tip: §7$it") }
+
         val unsynced = boosts.filter { it.syncStep != null }
         if (inInventory && config.showBreakdown) {
             lines += HudLine("§7Boosts §8(${gold.colour}Gold §8/ ${diamond.colour}Diamond§8)")

@@ -38,6 +38,10 @@ object OddsImport {
     var froggles: String? = null
         private set
 
+    /** When your pet or helmet last changed; swap tips wait a while after that. */
+    var setupSince = System.currentTimeMillis()
+        private set
+
     private var lastItemCheck = 0L
     private var lastSnapshot: String? = null
 
@@ -56,12 +60,19 @@ object OddsImport {
         val data = TrophyOdds.data
         if (hand.`is`(Items.FISHING_ROD)) {
             val level = lore(hand).firstNotNullOfOrNull { charm.find(it) }?.let { romanValues[it.groupValues[1]] } ?: 0
-            if (data.charm != level) update { data.charm = level }
+            if (data.charm != level) {
+                if (data.charm == null) {
+                    IHateTrophyFishing.chat("§aSynced Charm from your rod (${if (level > 0) "Charm " + TrophyOdds.roman(level) else "none"}) ✔")
+                }
+                update { data.charm = level }
+            }
         }
         val helmet = head.hoverName.string.stripFormatting()
         val wearing = listOf("Diamond Froggles", "Golden Froggles").firstOrNull { it in helmet }
         if (wearing != froggles) {
             froggles = wearing
+            setupSince = System.currentTimeMillis()
+            if (wearing != null && data.ownedFroggles.add(wearing)) Storage.markDirty()
             OddsHud.refresh()
         }
     }
@@ -80,13 +91,18 @@ object OddsImport {
     fun onChat(text: String) {
         summoned.find(text)?.let { return setActivePet(it.groupValues[1], null) }
         autopet.find(text)?.let { return setActivePet(it.groupValues[2], it.groupValues[1].toInt()) }
-        despawned.find(text)?.let { if (TrophyOdds.data.activePet == it.groupValues[1]) update { TrophyOdds.data.activePet = "" } }
+        despawned.find(text)?.let {
+            if (TrophyOdds.data.activePet != it.groupValues[1]) return
+            setupSince = System.currentTimeMillis()
+            update { TrophyOdds.data.activePet = "" }
+        }
     }
 
     private fun setActivePet(name: String, level: Int?) {
         val data = TrophyOdds.data
         val pet = data.pets[name]
         if (data.activePet == name && (level == null || pet == null || pet.level == level)) return
+        setupSince = System.currentTimeMillis()
         update {
             data.activePet = name
             // Level-ups change the ability a little; the value itself is re-read next time /pets is opened.
@@ -108,7 +124,10 @@ object OddsImport {
 
         val data = TrophyOdds.data
         var changed = false
+        val messages = mutableListOf<String>()
+        var petsChanged = false
         var inHuntingBox = title.contains("Hunting Box", ignoreCase = true)
+        val frogBefore = data.goldenFrog to data.diamondFrog
 
         for (stack in items) {
             val name = stack.hoverName.string.stripFormatting().trim()
@@ -128,9 +147,13 @@ object OddsImport {
                 val active = text.contains("Click to despawn")
                 // Several pets can share a name; keep the one that's out, otherwise the highest level.
                 val existing = data.pets[petKey]
-                if (active || existing == null || (data.activePet != petKey && pet.level > existing.level)) {
+                val keep = active || existing == null || (data.activePet != petKey && pet.level > existing.level)
+                if (keep && (existing == null || !existing.sameAs(pet))) {
                     data.pets[petKey] = pet
-                    changed = true
+                    petsChanged = true
+                    if (active) {
+                        messages += "§aSynced your $petKey (Lvl ${pet.level}${pet.heldItem?.let { ", $it" } ?: ""}) ✔"
+                    }
                 }
                 if (active && data.activePet != petKey) {
                     data.activePet = petKey
@@ -143,8 +166,16 @@ object OddsImport {
                     ?: perkPercent.find(text)?.groupValues?.get(1)?.toDouble()
                 if (percent != null) {
                     IHateTrophyFishing.logger.info("Read $name as $percent% from: $text")
-                    if (name.startsWith("Midas")) data.midasLure = percent else data.radiantFisher = percent
-                    changed = true
+                    val midas = name.startsWith("Midas")
+                    val before = if (midas) data.midasLure else data.radiantFisher
+                    if (before != percent) {
+                        if (midas) data.midasLure = percent else data.radiantFisher = percent
+                        changed = true
+                        val perk = if (midas) "Midas Lure" else "Radiant Fisher"
+                        val tier = (percent / 2).toInt()
+                        val boost = if (midas) "§6+${percent.toInt()}% Gold" else "§b+${percent.toInt()}% Diamond"
+                        messages += "§aSynced $perk ${if (tier > 0) TrophyOdds.roman(tier) else "(not bought)"} §7($boost§7) §a✔"
+                    }
                 }
             }
 
@@ -152,20 +183,30 @@ object OddsImport {
                 inHuntingBox = true
                 val value = it.groupValues[1].toDouble()
                 if (it.groupValues[2] == "GOLD") data.goldenFrog = value else data.diamondFrog = value
-                changed = true
             }
         }
         // Attributes you have no shards in don't show, so opening the Hunting Box means they're 0.
         if (inHuntingBox) {
             if (data.goldenFrog == null) data.goldenFrog = 0.0
             if (data.diamondFrog == null) data.diamondFrog = 0.0
+            if ((data.goldenFrog to data.diamondFrog) != frogBefore) {
+                changed = true
+                messages += "§aSynced frog shards §7(Golden Frog §6+${TrophyOdds.fmt(data.goldenFrog!!)}%§7, Diamond Frog §b+${TrophyOdds.fmt(data.diamondFrog!!)}%§7) §a✔"
+            }
+        }
+        if (petsChanged) {
             changed = true
+            if (messages.none { it.startsWith("§aSynced your") }) messages += "§aSynced your pets ✔"
         }
         if (changed) {
             Storage.markDirty()
             OddsHud.refresh()
         }
+        messages.forEach { IHateTrophyFishing.chat(it) }
     }
+
+    private fun PetInfo.sameAs(other: PetInfo) =
+        level == other.level && heldItem == other.heldItem && fishBoost == other.fishBoost && frogBoost == other.frogBoost
 
     private fun lore(stack: ItemStack) =
         stack.get(DataComponents.LORE)?.lines()?.map { it.string.stripFormatting() } ?: emptyList()

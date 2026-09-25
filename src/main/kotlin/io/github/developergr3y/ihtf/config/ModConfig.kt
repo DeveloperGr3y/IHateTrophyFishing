@@ -135,6 +135,12 @@ class OddsConfig {
 
     @Expose
     @JvmField
+    @ConfigOption(name = "Show Swap Tips", desc = "Suggest a pet or helmet you already own when it'd boost your odds.")
+    @ConfigEditorBoolean
+    var showSwapTips = true
+
+    @Expose
+    @JvmField
     @ConfigOption(name = "Where", desc = "Only on the Crimson Isle and Lotus Atoll, or anywhere.")
     @ConfigEditorDropdown
     var where = ShowWhere.TROPHY_ISLANDS

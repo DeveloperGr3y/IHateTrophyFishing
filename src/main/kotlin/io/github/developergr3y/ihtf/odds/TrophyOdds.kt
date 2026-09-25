@@ -2,6 +2,8 @@ package io.github.developergr3y.ihtf.odds
 
 import com.google.gson.annotations.Expose
 import io.github.developergr3y.ihtf.data.Storage
+import io.github.developergr3y.ihtf.tracker.Tracker
+import io.github.developergr3y.ihtf.util.Location
 
 /** What we know about the things that boost Gold / Diamond odds, per profile. null = not read yet. */
 class OddsData {
@@ -23,6 +25,9 @@ class OddsData {
 
     /** Name of the pet you have out; "" = no pet; null = don't know yet. */
     @Expose var activePet: String? = null
+
+    /** Froggles we've seen you wear, so we can suggest them. */
+    @Expose var ownedFroggles: MutableSet<String> = mutableSetOf()
 }
 
 class PetInfo {
@@ -128,6 +133,36 @@ object TrophyOdds {
         }
         return list
     }
+
+    private const val TIP_AFTER_MS = 2 * 60_000L
+    private const val TIP_MIN_GAIN = 5.0
+
+    /**
+     * One suggestion to swap to something you already own (never to buy something), shown only after you've fished
+     * with the same setup for a couple of minutes, and only when it's worth at least +5%. Null if there's nothing.
+     */
+    fun swapTip(frog: Boolean): String? {
+        if (System.currentTimeMillis() - OddsImport.setupSince < TIP_AFTER_MS || Tracker.isAfk) return null
+        val d = data
+        val active = d.activePet ?: return null
+        fun boostOf(pet: PetInfo?) = (if (frog) pet?.frogBoost else pet?.fishBoost) ?: 0.0
+
+        val current = boostOf(d.pets[active])
+        d.pets.entries.filter { it.key != active }.maxByOrNull { boostOf(it.value) }?.let { (name, pet) ->
+            val gain = boostOf(pet) - current
+            if (gain >= TIP_MIN_GAIN) return "your $name adds §6+${fmt(gain)}%§7/§b+${fmt(gain)}%§7 here"
+        }
+
+        if (OddsImport.froggles == null && Location.onTrophyIsland) {
+            when {
+                "Diamond Froggles" in d.ownedFroggles -> return "your Diamond Froggles add §6+10%§7/§b+5%§7 in Wormholes"
+                "Golden Froggles" in d.ownedFroggles -> return "your Golden Froggles add §6+5% Gold§7 in Wormholes"
+            }
+        }
+        return null
+    }
+
+    fun fmt(value: Double) = if (value % 1.0 == 0.0) value.toInt().toString() else "%.1f".format(value)
 
     private fun perkName(name: String, percent: Double): String {
         val tier = (percent / 2).toInt()
