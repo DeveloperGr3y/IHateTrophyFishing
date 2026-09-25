@@ -93,7 +93,7 @@ object TrophyOdds {
             else Boost(perkName("Radiant Fisher", it), 0.0, it, tip = "max it for §b+20% Diamond".takeIf { _ -> it < 20 })
         }
 
-        val petName = if (frog) "Frog pet" else "Spinosaurus"
+        val petName = if (frog) "Mythic Frog pet" else "Spinosaurus"
         val pet = d.activePet?.let { d.pets[it] }
         when {
             d.activePet == null -> list += Boost("Pet", 0.0, 0.0, syncStep = "open §6/pets")
