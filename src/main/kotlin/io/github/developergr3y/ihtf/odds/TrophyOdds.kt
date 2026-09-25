@@ -103,7 +103,7 @@ object TrophyOdds {
                 list += Boost(
                     if (boost > 0) "${d.activePet} ${pet?.level}" else petName,
                     boost, boost,
-                    tip = "$petName: up to §6+10%§7/§b+10%".takeIf { boost < 10 },
+                    tip = "up to §6+10%§7/§b+10%".takeIf { boost < 10 },
                 )
                 val item = pet?.heldItem
                 list += when (item) {
