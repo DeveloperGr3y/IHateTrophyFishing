@@ -16,7 +16,7 @@ class OddsData {
     /** Gemma's Radiant Fisher perk, as a percentage (0-20). */
     @Expose var radiantFisher: Double? = null
 
-    /** Hunting Box attributes (Flipflopper / Seashine shards), as percentages (0-5). Frogs only. */
+    /** Golden Frog / Diamond Frog attributes (Flipflopper / Seashine shards), as percentages (0-5). Frogs only. */
     @Expose var goldenFrog: Double? = null
     @Expose var diamondFrog: Double? = null
 
@@ -115,7 +115,7 @@ object TrophyOdds {
         }
 
         if (frog) {
-            val step = "open the §6Hunting Box"
+            val step = "open your §6Attribute Menu"
             list += d.goldenFrog.let {
                 if (it == null) Boost("Golden Frog", 0.0, 0.0, syncStep = step)
                 else Boost("Golden Frog", it, 0.0, tip = "Flipflopper shards: up to §6+5% Gold".takeIf { _ -> it < 5 })

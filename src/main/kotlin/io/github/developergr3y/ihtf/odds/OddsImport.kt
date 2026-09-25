@@ -16,7 +16,8 @@ import net.minecraft.world.item.Items
 /**
  * Reads everything that boosts Gold / Diamond odds, the same way the rest of the mod reads trophy data:
  *  - your rod (Charm) and helmet (Froggles), from the items themselves;
- *  - Marigold's and Gemma's shops (Midas Lure, Radiant Fisher), /pets and the Hunting Box, while they're open;
+ *  - Marigold's and Gemma's shops (Midas Lure, Radiant Fisher), /pets and the Attribute Menu (or Hunting Box),
+ *    while they're open;
  *  - which pet is out, from the summon / Autopet chat messages and the tab list's Pet widget.
  */
 object OddsImport {
@@ -126,7 +127,7 @@ object OddsImport {
         var changed = false
         val messages = mutableListOf<String>()
         var petsChanged = false
-        var inHuntingBox = title.contains("Hunting Box", ignoreCase = true)
+        var inAttributes = title.contains("Attribute", ignoreCase = true) || title.contains("Hunting Box", ignoreCase = true)
         val frogBefore = data.goldenFrog to data.diamondFrog
 
         for (stack in items) {
@@ -180,13 +181,13 @@ object OddsImport {
             }
 
             frogAttribute.find(text)?.let {
-                inHuntingBox = true
+                inAttributes = true
                 val value = it.groupValues[1].toDouble()
                 if (it.groupValues[2] == "GOLD") data.goldenFrog = value else data.diamondFrog = value
             }
         }
-        // Attributes you have no shards in don't show, so opening the Hunting Box means they're 0.
-        if (inHuntingBox) {
+        // Attributes you have no shards in don't show, so opening the Attribute Menu or Hunting Box means they're 0.
+        if (inAttributes) {
             if (data.goldenFrog == null) data.goldenFrog = 0.0
             if (data.diamondFrog == null) data.diamondFrog = 0.0
             if ((data.goldenFrog to data.diamondFrog) != frogBefore) {
