@@ -127,7 +127,7 @@ object OddsImport {
         var changed = false
         val messages = mutableListOf<String>()
         var petsChanged = false
-        var inAttributes = title.contains("Attribute", ignoreCase = true) || title.contains("Hunting Box", ignoreCase = true)
+        var inAttributes = false
         val frogBefore = data.goldenFrog to data.diamondFrog
 
         for (stack in items) {
@@ -186,7 +186,8 @@ object OddsImport {
                 if (it.groupValues[2] == "GOLD") data.goldenFrog = value else data.diamondFrog = value
             }
         }
-        // Attributes you have no shards in don't show, so opening the Attribute Menu or Hunting Box means they're 0.
+        // Attributes you have no shards in don't show, so once one frog attribute is on screen, a missing one is 0.
+        // (Only then: pages of unrelated attributes shouldn't count as "none".)
         if (inAttributes) {
             if (data.goldenFrog == null) data.goldenFrog = 0.0
             if (data.diamondFrog == null) data.diamondFrog = 0.0

@@ -115,7 +115,7 @@ object TrophyOdds {
         }
 
         if (frog) {
-            val step = "open your §6Attribute Menu"
+            val step = "open your §6Attribute Menu§e and search §6Frog"
             list += d.goldenFrog.let {
                 if (it == null) Boost("Golden Frog", 0.0, 0.0, syncStep = step)
                 else Boost("Golden Frog", it, 0.0, tip = "Flipflopper shards: up to §6+5% Gold".takeIf { _ -> it < 5 })
