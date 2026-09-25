@@ -37,8 +37,13 @@ object OddsHud : HudElement("Trophy Odds") {
         val lines = mutableListOf<HudLine>()
 
         lines += HudLine("§e§lTrophy Odds §7${if (frog) "Frogs" else "Fish"}")
-        lines += HudLine("${gold.formatted} ${format(odds.gold)}")
-        lines += HudLine("${diamond.formatted} ${format(odds.diamond)}")
+        val oddsInfo = listOf(
+            "§7Your chance that the next trophy is this tier.",
+            "§7Base: §6Gold 2%§7, §bDiamond 0.2%§7. Diamond is rolled",
+            "§7first, then Gold, then Silver, then Bronze.",
+        )
+        lines += HudLine("${gold.formatted} ${format(odds.gold)}", tooltip = oddsInfo)
+        lines += HudLine("${diamond.formatted} ${format(odds.diamond)}", tooltip = oddsInfo)
         if (OddsImport.froggles != null) {
             val wormhole = TrophyOdds.odds(boosts, inWormhole = true)
             lines += HudLine("§8In a Wormhole: ${gold.colour}${short(wormhole.gold)} §8· ${diamond.colour}${short(wormhole.diamond)}")
@@ -48,7 +53,16 @@ object OddsHud : HudElement("Trophy Odds") {
 
         val unsynced = boosts.filter { it.syncStep != null }
         if (inInventory && config.showBreakdown) {
-            lines += HudLine("§7Boosts §8(${gold.colour}Gold §8/ ${diamond.colour}Diamond§8)")
+            lines += HudLine(
+                "§7Boosts §8(${gold.colour}Gold §8/ ${diamond.colour}Diamond§8)",
+                tooltip = listOf(
+                    "§7Each boost multiplies your chance of that tier:",
+                    "§7+12% turns §62% §7into §62.24%§7.",
+                    "§7The Trophy Chance stat changes §fwhich §7trophy you",
+                    "§7catch, not its tier, so it isn't counted here.",
+                    "§8Hover a boost to see what it is.",
+                ),
+            )
             boosts.forEach { lines += breakdownLine(it) }
         } else {
             unsynced.forEach { lines += HudLine("§e⚠ ${it.name}: ${it.syncStep}") }
@@ -59,7 +73,8 @@ object OddsHud : HudElement("Trophy Odds") {
     private fun breakdownLine(boost: Boost): HudLine {
         val where = if (boost.wormholeOnly) " §8(Wormholes)" else ""
         return HudLine(
-            when {
+            tooltip = boost.info.takeIf { it.isNotEmpty() },
+            text = when {
                 boost.syncStep != null -> "§e? §7${boost.name} §8— §e${boost.syncStep}"
                 boost.active -> "§a✔ §f${boost.name} ${percent(boost.gold, "§6")}§8/${percent(boost.diamond, "§b")}$where" +
                     (boost.tip?.takeIf { config.showTips }?.let { " §8· §7$it" } ?: "")

@@ -52,6 +52,9 @@ class Boost(
     val tip: String? = null,
 ) {
     val active get() = syncStep == null && (gold > 0 || diamond > 0)
+
+    /** A short explanation, shown when you hover the row. */
+    var info: List<String> = emptyList()
 }
 
 class Odds(val gold: Double, val diamond: Double)
@@ -84,33 +87,71 @@ object TrophyOdds {
                 tip = "Charm VI: up to §6+12%§7/§b+12%".takeIf { charm < 6 },
             )
         }
+        list.last().info = listOf(
+            "§fCharm §7is a fishing rod enchantment.",
+            "§7Each level adds §6+2% Gold§7, §b+2% Diamond",
+            "§7and +2% Silver chance, up to §f+12% §7at VI.",
+            "§8Read from the rod you're holding.",
+        )
         list += d.midasLure.let {
             if (it == null) Boost("Midas Lure", 0.0, 0.0, syncStep = "open §6Marigold's§e shop (Dwarven Mines)")
             else Boost(perkName("Midas Lure", it), it, 0.0, tip = "max it for §6+20% Gold".takeIf { _ -> it < 20 })
         }
+        list.last().info = listOf(
+            "§fMidas Lure §7is a perk from §6Marigold's",
+            "§7Gold Essence Shop in the Dwarven Mines.",
+            "§7Each tier adds §6+2% Gold §7chance, up to §6+20% §7at X.",
+        )
         list += d.radiantFisher.let {
             if (it == null) Boost("Radiant Fisher", 0.0, 0.0, syncStep = "open §6Gemma's§e shop (Crystal Nucleus)")
             else Boost(perkName("Radiant Fisher", it), 0.0, it, tip = "max it for §b+20% Diamond".takeIf { _ -> it < 20 })
         }
+        list.last().info = listOf(
+            "§fRadiant Fisher §7is a perk from §6Gemma's",
+            "§7Diamond Essence Shop in the Crystal Nucleus.",
+            "§7Each tier adds §b+2% Diamond §7chance, up to §b+20% §7at X.",
+        )
 
         val petName = if (frog) "Mythic Frog pet" else "Spinosaurus"
+        val petInfo = if (frog) {
+            listOf(
+                "§fThe Mythic Frog pet's §7Home Sweet Home ability",
+                "§7adds §6Gold §7and §bDiamond §7chance on Trophy Frogs,",
+                "§7up to §f+10% §7at level 100.",
+                "§8Read from /pets; your active pet from chat and the tab list.",
+            )
+        } else {
+            listOf(
+                "§fThe Spinosaurus pet's §7Pursuit ability adds",
+                "§6+0.1% Gold §7and §b+0.1% Diamond §7chance per level",
+                "§7on Trophy Fish, up to §f+10% §7at level 100.",
+                "§8Read from /pets; your active pet from chat and the tab list.",
+            )
+        }
+        val petItemInfo = listOf(
+            "§fPet items §7for trophy fishing (one per pet):",
+            "§7 Barrel of Riches: §6+10% Gold",
+            "§7 Lotus Crown: §b+10% Diamond",
+            "§7They work on whichever pet you have out.",
+        )
         val pet = d.activePet?.let { d.pets[it] }
         when {
-            d.activePet == null -> list += Boost("Pet", 0.0, 0.0, syncStep = "open §6/pets")
-            d.activePet != "" && pet == null -> list += Boost("Pet", 0.0, 0.0, syncStep = "open §6/pets§e to read your ${d.activePet}")
+            d.activePet == null -> list += Boost("Pet", 0.0, 0.0, syncStep = "open §6/pets").also { it.info = petInfo + petItemInfo }
+            d.activePet != "" && pet == null ->
+                list += Boost("Pet", 0.0, 0.0, syncStep = "open §6/pets§e to read your ${d.activePet}").also { it.info = petInfo + petItemInfo }
             else -> {
                 val boost = if (frog) pet?.frogBoost ?: 0.0 else pet?.fishBoost ?: 0.0
                 list += Boost(
                     if (boost > 0) "${d.activePet} ${pet?.level}" else petName,
                     boost, boost,
                     tip = "up to §6+10%§7/§b+10%".takeIf { boost < 10 },
-                )
+                ).also { it.info = petInfo }
                 val item = pet?.heldItem
                 list += when (item) {
                     "Barrel of Riches" -> Boost(item, 10.0, 0.0)
                     "Lotus Crown" -> Boost(item, 0.0, 10.0)
                     else -> Boost("Pet item", 0.0, 0.0, tip = "Lotus Crown §b+10% Diamond§7 or Barrel of Riches §6+10% Gold")
-                }
+                }.also { it.info = petItemInfo }
             }
         }
 
@@ -120,10 +161,20 @@ object TrophyOdds {
                 if (it == null) Boost("Golden Frog", 0.0, 0.0, syncStep = step)
                 else Boost("Golden Frog", it, 0.0, tip = "Flipflopper shards: up to §6+5% Gold".takeIf { _ -> it < 5 })
             }
+            list.last().info = listOf(
+                "§fGolden Frog §7is an attribute from §fFlipflopper shards§7.",
+                "§7Each level adds §6+0.5% Gold §7chance on Trophy Frogs,",
+                "§7up to §6+5% §7at X.",
+            )
             list += d.diamondFrog.let {
                 if (it == null) Boost("Diamond Frog", 0.0, 0.0, syncStep = step)
                 else Boost("Diamond Frog", 0.0, it, tip = "Seashine shards: up to §b+5% Diamond".takeIf { _ -> it < 5 })
             }
+            list.last().info = listOf(
+                "§fDiamond Frog §7is an attribute from §fSeashine shards§7.",
+                "§7Each level adds §b+0.5% Diamond §7chance on Trophy Frogs,",
+                "§7up to §b+5% §7at X.",
+            )
         }
 
         list += when (OddsImport.froggles) {
@@ -131,6 +182,12 @@ object TrophyOdds {
             "Golden Froggles" -> Boost("Golden Froggles", 5.0, 0.0, wormholeOnly = true, tip = "Diamond Froggles: §6+10%§7/§b+5%")
             else -> Boost("Froggles", 0.0, 0.0, wormholeOnly = true, tip = "Diamond Froggles: §6+10%§7/§b+5%§7 in Wormholes")
         }
+        list.last().info = listOf(
+            "§fFroggles §7are helmets that only boost you in Wormholes:",
+            "§7 Golden Froggles: §6+5% Gold",
+            "§7 Diamond Froggles: §6+10% Gold§7, §b+5% Diamond",
+            "§8Read from the helmet you're wearing.",
+        )
         return list
     }
 

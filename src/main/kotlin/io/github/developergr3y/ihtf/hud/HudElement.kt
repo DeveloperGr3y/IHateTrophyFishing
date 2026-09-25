@@ -5,6 +5,7 @@ import io.github.developergr3y.ihtf.IHateTrophyFishing
 import io.github.developergr3y.ihtf.tracker.Tracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphicsExtractor
+import net.minecraft.network.chat.Component
 
 /**
  * Where a display sits on screen (in GUI pixels) and how big it is. Saved in the config.
@@ -27,6 +28,8 @@ class HudLine(
     val text: String,
     val iconKey: String? = null,
     val indent: Boolean = iconKey != null,
+    /** Shown when you hover the line with your inventory open. */
+    val tooltip: List<String>? = null,
     /** Called with the mouse button (0 = left, 1 = right). */
     val onClick: ((Int) -> Unit)? = null,
 )
@@ -123,6 +126,9 @@ abstract class HudElement(val label: String) {
             graphics.text(font, line.text, x, y, -1, true)
         }
         pose.popMatrix()
+        lines.getOrNull(hovered)?.tooltip?.let { tooltip ->
+            graphics.setComponentTooltipForNextFrame(font, tooltip.map { Component.literal(it) }, mouseX.toInt(), mouseY.toInt())
+        }
     }
 
     /** Rows are a bit taller when icons are shown, so the 12px icons don't overlap. */
