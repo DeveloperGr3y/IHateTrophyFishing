@@ -29,6 +29,10 @@ one and how close you are to pity. Click the tiers with your inventory open to f
 Charm, Midas Lure, Radiant Fisher, your Spinosaurus or Mythic Frog pet (up to +10% each) and its item, the frog shards, and Froggles in
 Wormholes. Anything it hasn't read yet is flagged with what to open. Open your inventory for the full breakdown.
 
+<img src="docs/images/trophy-odds.png" alt="Trophy Odds" width="400">
+
+<img src="docs/images/trophy-odds-breakdown.png" alt="Trophy Odds breakdown" width="560">
+
 **Currently Targeting.** A second display listing everything you've caught in the last 10 minutes.
 Handy when you're stacking conditions for a few fish at once.
 
