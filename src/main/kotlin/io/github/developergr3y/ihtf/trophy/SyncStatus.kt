@@ -3,6 +3,7 @@ package io.github.developergr3y.ihtf.trophy
 import io.github.developergr3y.ihtf.IHateTrophyFishing
 import io.github.developergr3y.ihtf.data.ProfileData
 import io.github.developergr3y.ihtf.data.Storage
+import io.github.developergr3y.ihtf.odds.TrophyOdds
 
 /**
  * The two things to open in-game so the mod knows your trophy data, spelled out per kind:
@@ -30,6 +31,10 @@ object SyncStatus {
             line(profile.pitySynced(frog), "${kind(frog).replaceFirstChar { it.uppercase() }} pity", pityStep(frog))
             line(profile.collectionSynced(frog), "${kind(frog).replaceFirstChar { it.uppercase() }} owned", ownedStep(frog))
         }
+        // Trophy Odds boosts (fish and frog lists overlap, so merge them).
+        val boosts = (TrophyOdds.boosts(frog = false) + TrophyOdds.boosts(frog = true)).distinctBy { it.name }
+        for (boost in boosts.filter { it.syncStep != null }) line(false, "Trophy Odds: ${boost.name}", boost.syncStep!!)
+        if (boosts.none { it.syncStep != null }) line(true, "Trophy Odds boosts", "")
     }
 
     private fun line(done: Boolean, what: String, step: String) {

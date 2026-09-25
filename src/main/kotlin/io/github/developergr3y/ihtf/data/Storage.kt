@@ -3,6 +3,7 @@ package io.github.developergr3y.ihtf.data
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 import io.github.developergr3y.ihtf.IHateTrophyFishing
+import io.github.developergr3y.ihtf.odds.OddsData
 import io.github.developergr3y.ihtf.trophy.FishCounts
 import io.github.developergr3y.ihtf.trophy.PityProgress
 import io.github.developergr3y.ihtf.trophy.Trophies
@@ -44,6 +45,9 @@ class ProfileData {
 
     /** Fish id -> item rarity colour code (e.g. "§5" for Epic), as seen in Hypixel's chat message or Odger's menu. */
     @Expose var colours: MutableMap<String, String> = mutableMapOf()
+
+    /** Everything that boosts Gold / Diamond odds (perks, pets, Charm...). */
+    @Expose var odds = OddsData()
 
     /** Longest trophy streak ever on this profile. */
     @Expose var bestStreak = 0

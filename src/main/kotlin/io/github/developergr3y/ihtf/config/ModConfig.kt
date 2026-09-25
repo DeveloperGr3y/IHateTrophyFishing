@@ -92,6 +92,61 @@ class TrackersCategory {
     @JvmField
     @Category(name = "Missing Trophies", desc = "Which trophies you still need, one tier at a time.")
     var missing = MissingConfig()
+
+    @Expose
+    @JvmField
+    @Category(name = "Trophy Odds", desc = "Your chance of a Gold or Diamond, from everything that boosts it.")
+    var odds = OddsConfig()
+}
+
+enum class OddsFormat(private val label: String) {
+    BOTH("1 in 38 (2.63%)"),
+    ONE_IN("1 in 38"),
+    PERCENT("2.63%"),
+    ;
+
+    override fun toString() = label
+}
+
+class OddsConfig {
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Enabled", desc = "Show your chance of a Gold or Diamond on the next trophy.")
+    @ConfigEditorBoolean
+    var enabled = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Format", desc = "How to write the odds.")
+    @ConfigEditorDropdown
+    var format = OddsFormat.BOTH
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Show Breakdown", desc = "With your inventory open, list every boost and what it adds.")
+    @ConfigEditorBoolean
+    var showBreakdown = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Show Upgrade Tips", desc = "In the breakdown, show what you're missing and how much it'd add.")
+    @ConfigEditorBoolean
+    var showTips = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Where", desc = "Only on the Crimson Isle and Lotus Atoll, or anywhere.")
+    @ConfigEditorDropdown
+    var where = ShowWhere.TROPHY_ISLANDS
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Show When", desc = "Only while fishing or holding a rod, or always. Shows with your inventory open.")
+    @ConfigEditorDropdown
+    var showWhen = ShowWhen.FISHING_OR_ROD
+
+    // Not shown as an option; set in GUI > Edit GUI Locations.
+    @Expose @JvmField var position = HudPosition(x = 300, y = 5)
 }
 
 class MissingConfig {

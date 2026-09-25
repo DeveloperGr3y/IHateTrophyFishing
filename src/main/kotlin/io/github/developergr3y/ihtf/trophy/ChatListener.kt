@@ -1,6 +1,7 @@
 package io.github.developergr3y.ihtf.trophy
 
 import io.github.developergr3y.ihtf.data.Storage
+import io.github.developergr3y.ihtf.odds.OddsImport
 import io.github.developergr3y.ihtf.tracker.Tracker
 import io.github.developergr3y.ihtf.util.colourBefore
 import io.github.developergr3y.ihtf.util.toLegacyString
@@ -44,6 +45,8 @@ object ChatListener {
             Storage.setProfile(it.groupValues[1])
             return
         }
+
+        OddsImport.onChat(text)
 
         trophyCatch.find(text)?.let {
             val name = it.groupValues[1].trim()

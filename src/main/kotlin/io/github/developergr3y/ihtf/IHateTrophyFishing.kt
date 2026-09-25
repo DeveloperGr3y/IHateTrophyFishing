@@ -12,6 +12,7 @@ import io.github.developergr3y.ihtf.features.Streak
 import io.github.developergr3y.ihtf.hud.HudEditScreen
 import io.github.developergr3y.ihtf.hud.HudManager
 import io.github.developergr3y.ihtf.hud.RouletteOverlay
+import io.github.developergr3y.ihtf.odds.OddsImport
 import io.github.developergr3y.ihtf.tracker.Tracker
 import io.github.developergr3y.ihtf.trophy.ChatListener
 import io.github.developergr3y.ihtf.trophy.MenuImport
@@ -75,6 +76,7 @@ object IHateTrophyFishing : ClientModInitializer {
             AchievementToast.tick()
             SlugfishTimer.tick(client)
             MenuImport.tick()
+            OddsImport.tick(client)
             Storage.tick()
         }
 

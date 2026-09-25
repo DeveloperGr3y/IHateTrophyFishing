@@ -25,6 +25,10 @@ one and how close you are to pity. Click the tiers with your inventory open to f
 
 <img src="docs/images/missing-trophies.png" alt="Missing Trophies" width="520">
 
+**Trophy Odds.** Your chance of a Gold or Diamond on the next trophy, worked out from everything that boosts it:
+Charm, Midas Lure, Radiant Fisher, your Spinosaurus or Frog pet and its item, the frog shards, and Froggles in
+Wormholes. Anything it hasn't read yet is flagged with what to open. Open your inventory for the full breakdown.
+
 **Currently Targeting.** A second display listing everything you've caught in the last 10 minutes.
 Handy when you're stacking conditions for a few fish at once.
 
