@@ -128,6 +128,8 @@ abstract class HudElement(val label: String) {
         pose.popMatrix()
         lines.getOrNull(hovered)?.tooltip?.let { tooltip ->
             graphics.setComponentTooltipForNextFrame(font, tooltip.map { Component.literal(it) }, mouseX.toInt(), mouseY.toInt())
+            // The screen has already drawn its queued tooltips by the time displays are drawn, so draw ours now.
+            graphics.extractDeferredElements(mouseX.toInt(), mouseY.toInt(), 0f)
         }
     }
 
