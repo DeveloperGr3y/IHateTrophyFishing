@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/DeveloperGr3y/IHateTrophyFishing/compare/v0.3.0...v0.4.0) (2026-09-25)
+
+
+### Features
+
+* Trophy Odds display showing your Gold and Diamond chances ([#23](https://github.com/DeveloperGr3y/IHateTrophyFishing/issues/23)) ([f2b6de1](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/f2b6de1af2164224b91f3996d7722169748084f0))
+
 ## [0.3.0](https://github.com/DeveloperGr3y/IHateTrophyFishing/compare/v0.2.0...v0.3.0) (2026-09-24)
 
 
