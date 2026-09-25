@@ -19,6 +19,8 @@ roughly how long that'll take at your current pace. Sorted by rarity, with icons
 **Syncing your data.** Do each once and the mod remembers it (`/ihtf sync` shows what's left):
 - Fish pity: `/pity` → Crimson Isle. Frog pity: `/pity` → Lotus Atoll.
 - Which fish you own: talk to Odger (Trophy Fish). Which frogs you own: talk to Researcher Ribery.
+- For Trophy Odds: open Marigold's and Gemma's shops, `/pets`, and your Attribute Menu (search "Frog"), and hold
+  your rod. You'll get a chat message as each one syncs.
 
 **Missing Trophies.** A to-do list of what you haven't caught yet, one tier at a time, with where to catch each
 one and how close you are to pity. Click the tiers with your inventory open to flick between them.
@@ -26,8 +28,10 @@ one and how close you are to pity. Click the tiers with your inventory open to f
 <img src="docs/images/missing-trophies.png" alt="Missing Trophies" width="520">
 
 **Trophy Odds.** Your chance of a Gold or Diamond on the next trophy, worked out from everything that boosts it:
-Charm, Midas Lure, Radiant Fisher, your Spinosaurus or Mythic Frog pet (up to +10% each) and its item, the frog shards, and Froggles in
-Wormholes. Anything it hasn't read yet is flagged with what to open. Open your inventory for the full breakdown.
+Charm, Midas Lure, Radiant Fisher, your Spinosaurus or Mythic Frog pet (up to +10% each) and its item, the frog
+shards, and Froggles in Wormholes. Anything it hasn't read yet is flagged with what to open. Open your inventory for
+the full breakdown, and hover any boost to see what it is. It'll also suggest a pet or helmet you already own when
+it'd help.
 
 <img src="docs/images/trophy-odds.png" alt="Trophy Odds" width="400">
 
