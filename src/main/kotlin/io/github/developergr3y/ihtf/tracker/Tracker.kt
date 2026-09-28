@@ -73,6 +73,11 @@ object Tracker {
         for (period in profile.activePeriods()) {
             period.fish.getOrPut(key) { FishCounts() }.add(tier, amount)
         }
+        // Catching a trophy means you're fishing, so a pause (e.g. clicked by accident) shouldn't outlive it.
+        if (manuallyPaused) {
+            manuallyPaused = false
+            IHateTrophyFishing.chat("§7Tracker resumed: you caught a trophy.")
+        }
         lastActivity = now
         lastCatch[key] = now
         repeat(amount) { recentCatches.addLast(RecentCatch(key, tier, now)) }

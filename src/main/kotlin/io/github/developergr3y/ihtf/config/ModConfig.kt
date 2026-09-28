@@ -73,6 +73,12 @@ class GuiCategory {
         HudManager.resetPositions()
         IHateTrophyFishing.chat("Display positions reset.")
     }
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Update Notice", desc = "Say in chat when a newer version is out on GitHub (checked once per game).")
+    @ConfigEditorBoolean
+    var updateNotice = true
 }
 
 // Each feature is a sub-category (listed under its parent on the left), so new features slot in easily.
