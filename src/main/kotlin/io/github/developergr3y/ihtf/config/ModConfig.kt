@@ -369,6 +369,15 @@ class TrackerConfig {
     @Expose
     @JvmField
     @ConfigOption(
+        name = "Compact",
+        desc = "One line per trophy, with its pity on the same line. Also: click §e[Compact]§7 on the tracker with your inventory open.",
+    )
+    @ConfigEditorBoolean
+    var compact = false
+
+    @Expose
+    @JvmField
+    @ConfigOption(
         name = "Count Water Fishing",
         desc = "Count time with your bobber in water too (needed for Trophy Frogs).",
     )
