@@ -175,4 +175,18 @@ object Tracker {
         }
         return (overallRate * share).takeIf { it > 0.0 }
     }
+
+    /** A day needs this much fishing, and this many of the trophy, before its pace counts as your best. */
+    private const val BEST_DAY_MIN_MS = 30 * 60_000L
+    private const val BEST_DAY_MIN_CATCHES = 3
+
+    /**
+     * Your best pace for one trophy: its catches per hour on the day (or session) you caught it fastest. That's
+     * roughly what fishing for it looks like, unlike the all-time average, which includes every hour spent going for
+     * something else. Null until a day has at least half an hour of fishing and a few of that trophy.
+     */
+    fun bestPerHour(key: String, profile: ProfileData): Double? =
+        (profile.days.values + profile.session)
+            .filter { it.activeMillis >= BEST_DAY_MIN_MS && (it.fish[key]?.total ?: 0) >= BEST_DAY_MIN_CATCHES }
+            .maxOfOrNull { (it.fish[key]?.total ?: 0) / (it.activeMillis / 3_600_000.0) }
 }
