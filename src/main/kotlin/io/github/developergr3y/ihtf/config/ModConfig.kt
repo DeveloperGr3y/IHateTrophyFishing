@@ -73,6 +73,12 @@ class GuiCategory {
         HudManager.resetPositions()
         IHateTrophyFishing.chat("Display positions reset.")
     }
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Update Notice", desc = "Say in chat when a newer version is out on GitHub (checked once per game).")
+    @ConfigEditorBoolean
+    var updateNotice = true
 }
 
 // Each feature is a sub-category (listed under its parent on the left), so new features slot in easily.
@@ -365,6 +371,15 @@ class TrackerConfig {
     )
     @ConfigEditorBoolean
     var showIcons = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(
+        name = "Compact",
+        desc = "One line per trophy, with its pity on the same line. Also: click §e[Compact]§7 on the tracker with your inventory open.",
+    )
+    @ConfigEditorBoolean
+    var compact = false
 
     @Expose
     @JvmField

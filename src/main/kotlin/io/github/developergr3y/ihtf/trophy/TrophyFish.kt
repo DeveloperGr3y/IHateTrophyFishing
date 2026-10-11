@@ -126,7 +126,10 @@ class PityProgress {
 
     fun onCatch(tier: TrophyTier, amount: Int) {
         when (tier) {
-            TrophyTier.GOLD -> gold = 0
+            TrophyTier.GOLD -> {
+                gold = 0
+                diamond += amount // a Gold is still a catch without a Diamond
+            }
             TrophyTier.DIAMOND -> diamond = 0
             else -> {
                 gold += amount
@@ -173,12 +176,32 @@ fun pityStatuses(key: String, profile: ProfileData, showBoth: Boolean): List<Pit
             val (progress, total) = if (tier == TrophyTier.GOLD) synced.gold to synced.goldTotal else synced.diamond to synced.diamondTotal
             if (total > 0) return PityStatus(tier, maxOf(0, total - progress))
         }
+        // After 600 catches without one, the next (601st) is guaranteed: 0 left once you've caught 600.
         val after = if (tier == TrophyTier.GOLD) info?.goldPity ?: 100 else info?.diamondPity ?: 600
-        val left = after + 1 - counts.total
-        return if (left > 0) PityStatus(tier, left) else null
+        val left = after - counts.total
+        return if (left >= 0) PityStatus(tier, left) else null
     }
 
     val gold = status(TrophyTier.GOLD)
     val diamond = status(TrophyTier.DIAMOND)
     return listOfNotNull(gold, diamond.takeIf { gold == null || showBoth })
+}
+
+/**
+ * Is the next [tier] catch of [key] guaranteed by pity? Pity counts catches without that tier (e.g. 600 for
+ * Diamond), and the catch after that many is the guaranteed one. Unlike [pityStatuses] this also covers tiers you
+ * already own, since pity keeps counting after your first. Uses the /pity menu's numbers; without them it can only
+ * tell for a tier you've never caught (all your catches of that trophy count).
+ */
+fun pityGuaranteed(key: String, tier: TrophyTier, profile: ProfileData): Boolean {
+    val synced = profile.pity[key]
+    if (synced != null) {
+        val (progress, total) = if (tier == TrophyTier.GOLD) synced.gold to synced.goldTotal else synced.diamond to synced.diamondTotal
+        if (total > 0) return progress >= total
+    }
+    val counts = profile.lifetime[key] ?: FishCounts()
+    if (counts[tier] > 0) return false
+    val info = Trophies[key]
+    val after = if (tier == TrophyTier.GOLD) info?.goldPity ?: 100 else info?.diamondPity ?: 600
+    return counts.total >= after
 }
