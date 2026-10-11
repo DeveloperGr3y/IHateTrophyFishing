@@ -76,12 +76,15 @@ object MissingHud : HudElement("Missing Trophies") {
         return lines
     }
 
-    /** "pity in 37 ~2h 10m", using the same numbers as the Trophy Tracker. */
+    /**
+     * "pity in 37 ~2h 10m". The time is at your best pace for that trophy (its best day), i.e. roughly how long a
+     * session going for it would take, not your all-time average across everything you fish. No time until you've
+     * had a real day of catching it.
+     */
     private fun pityText(key: String, tier: TrophyTier, profile: ProfileData): String? {
         val pity = pityStatuses(key, profile, showBoth = true).firstOrNull { it.tier == tier } ?: return null
         if (pity.catchesLeft == 0) return "§anext catch!"
-        val period = Tracker.period(IHateTrophyFishing.config.trackers.trophyFish.view)
-        val estimate = Tracker.estimatedPerHour(key, period, profile)
+        val estimate = Tracker.bestPerHour(key, profile)
             ?.let { " §e~" + TrackerHud.formatDuration((pity.catchesLeft / it * 3_600_000).toLong()) }
             .orEmpty()
         return "§7pity in §f${pity.catchesLeft}$estimate"
