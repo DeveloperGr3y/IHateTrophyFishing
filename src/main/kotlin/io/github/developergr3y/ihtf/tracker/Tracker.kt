@@ -11,7 +11,7 @@ import io.github.developergr3y.ihtf.hud.HudManager
 import io.github.developergr3y.ihtf.trophy.FishCounts
 import io.github.developergr3y.ihtf.trophy.Trophies
 import io.github.developergr3y.ihtf.trophy.TrophyTier
-import io.github.developergr3y.ihtf.trophy.pityStatuses
+import io.github.developergr3y.ihtf.trophy.pityGuaranteed
 import io.github.developergr3y.ihtf.util.Location
 import net.minecraft.client.Minecraft
 
@@ -66,8 +66,7 @@ object Tracker {
         // Checked before counting this catch: was it the first of this tier? (for the roulette's "first only")
         val firstOfTier = (profile.lifetime[key]?.get(tier) ?: 0) == 0
         // ...and was this tier guaranteed by pity? (for achievements)
-        val fromPity = tier >= TrophyTier.GOLD &&
-            pityStatuses(key, profile, showBoth = true).any { it.tier == tier && it.catchesLeft <= 1 }
+        val fromPity = tier >= TrophyTier.GOLD && pityGuaranteed(key, tier, profile)
         profile.lifetime.getOrPut(key) { FishCounts() }.add(tier, amount)
         profile.pity[key]?.onCatch(tier, amount)
         for (period in profile.activePeriods()) {
@@ -180,4 +179,18 @@ object Tracker {
         }
         return (overallRate * share).takeIf { it > 0.0 }
     }
+
+    /** A day needs this much fishing, and this many of the trophy, before its pace counts as your best. */
+    private const val BEST_DAY_MIN_MS = 30 * 60_000L
+    private const val BEST_DAY_MIN_CATCHES = 3
+
+    /**
+     * Your best pace for one trophy: its catches per hour on the day (or session) you caught it fastest. That's
+     * roughly what fishing for it looks like, unlike the all-time average, which includes every hour spent going for
+     * something else. Null until a day has at least half an hour of fishing and a few of that trophy.
+     */
+    fun bestPerHour(key: String, profile: ProfileData): Double? =
+        (profile.days.values + profile.session)
+            .filter { it.activeMillis >= BEST_DAY_MIN_MS && (it.fish[key]?.total ?: 0) >= BEST_DAY_MIN_CATCHES }
+            .maxOfOrNull { (it.fish[key]?.total ?: 0) / (it.activeMillis / 3_600_000.0) }
 }

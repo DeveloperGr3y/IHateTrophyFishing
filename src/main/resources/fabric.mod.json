@@ -6,12 +6,24 @@
 	"description": "Trophy fish and trophy frog tracker for Hypixel SkyBlock: catches per hour, pity counters and time until pity. Open the config with /ihtf.",
 	"authors": ["DeveloperGr3y"],
 	"license": "CC0-1.0",
+	"icon": "assets/ihatetrophyfishing/icon.png",
+	"contact": {
+		"homepage": "https://github.com/DeveloperGr3y/IHateTrophyFishing",
+		"sources": "https://github.com/DeveloperGr3y/IHateTrophyFishing",
+		"issues": "https://github.com/DeveloperGr3y/IHateTrophyFishing/issues"
+	},
 	"environment": "client",
 	"entrypoints": {
 		"client": [
 			{
 				"adapter": "kotlin",
 				"value": "io.github.developergr3y.ihtf.IHateTrophyFishing"
+			}
+		],
+		"modmenu": [
+			{
+				"adapter": "kotlin",
+				"value": "io.github.developergr3y.ihtf.config.ModMenuIntegration"
 			}
 		]
 	},

@@ -22,6 +22,8 @@ import io.github.developergr3y.ihtf.util.Compat
 import io.github.developergr3y.ihtf.util.HypixelLocation
 import io.github.developergr3y.ihtf.util.Location
 import io.github.developergr3y.ihtf.util.UpdateCheck
+import io.github.notenoughupdates.moulconfig.gui.GuiContext
+import io.github.notenoughupdates.moulconfig.gui.GuiElementComponent
 import io.github.notenoughupdates.moulconfig.managed.ManagedConfig
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigScreenComponent
 import net.fabricmc.api.ClientModInitializer
@@ -34,6 +36,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import org.slf4j.LoggerFactory
@@ -147,6 +150,13 @@ object IHateTrophyFishing : ClientModInitializer {
             }
         }
     }
+
+    /** Our settings as a screen, returning to [parent] when closed (for Mod Menu's "configure" button). */
+    fun configScreen(parent: Screen?): Screen = MoulConfigScreenComponent(
+        Component.literal("IHateTrophyFishing"),
+        GuiContext(GuiElementComponent(managedConfig.getEditor())),
+        parent,
+    )
 
     fun openAchievements() {
         nextTick = { Compat.setScreen(AchievementsScreen()) }

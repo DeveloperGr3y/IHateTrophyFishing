@@ -19,6 +19,9 @@ repositories {
     maven("https://repo.hypixel.net/repository/Hypixel") {
         content { includeGroup("net.hypixel") }
     }
+    maven("https://maven.terraformersmc.com/releases") {
+        content { includeGroup("com.terraformersmc") }
+    }
 }
 
 // Libraries bundled (and renamed) inside our jar so they can't clash with other mods' copies.
@@ -42,6 +45,9 @@ dependencies {
         exclude("org.jetbrains.kotlin")
         exclude("org.jetbrains.kotlinx")
     }
+
+    // Mod Menu: only its API, to open our settings from its mod list. Not bundled; nothing needs it installed.
+    compileOnly("com.terraformersmc:modmenu:${property("modmenu_version")}")
 }
 
 loom {
