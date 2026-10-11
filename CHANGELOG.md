@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.5.0](https://github.com/DeveloperGr3y/IHateTrophyFishing/compare/v0.4.0...v0.5.0) (2026-10-11)
+
+
+### Features
+
+* compact mode for the trophy tracker ([#27](https://github.com/DeveloperGr3y/IHateTrophyFishing/issues/27)) ([41e251e](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/41e251e8dcd9467791e9e9be5164e32de44c87ac))
+* missing trophies show time until pity at your best pace ([#26](https://github.com/DeveloperGr3y/IHateTrophyFishing/issues/26)) ([9ac10f1](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/9ac10f1178cb3b5f1885085ed72248955b11fc49))
+* mod icon, links, and open the settings from Mod Menu ([#29](https://github.com/DeveloperGr3y/IHateTrophyFishing/issues/29)) ([62da1f5](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/62da1f5f80efb09d77d609beee48cbcfa72bafd1))
+* resume on catch, less location polling, and an update notice ([#28](https://github.com/DeveloperGr3y/IHateTrophyFishing/issues/28)) ([860201c](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/860201cc8b62105c514711d9a3153b9267e6ffb1))
+
+
+### Bug Fixes
+
+* know the island from Hypixel's location packet ([#31](https://github.com/DeveloperGr3y/IHateTrophyFishing/issues/31)) ([b7d4f30](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/b7d4f308d874110aa4fa93bc0f740bfdf5d9c6cc))
+* pity is the catch after the limit, and Pity Party counts every pity ([#30](https://github.com/DeveloperGr3y/IHateTrophyFishing/issues/30)) ([60abea7](https://github.com/DeveloperGr3y/IHateTrophyFishing/commit/60abea7ac2830482b2f26e581bab146a58f61b68))
+
 ## [0.4.0](https://github.com/DeveloperGr3y/IHateTrophyFishing/compare/v0.3.0...v0.4.0) (2026-09-25)
 
 
