@@ -20,6 +20,7 @@ import io.github.developergr3y.ihtf.trophy.SyncStatus
 import io.github.developergr3y.ihtf.trophy.TrophyTier
 import io.github.developergr3y.ihtf.util.Compat
 import io.github.developergr3y.ihtf.util.Location
+import io.github.developergr3y.ihtf.util.UpdateCheck
 import io.github.notenoughupdates.moulconfig.managed.ManagedConfig
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigScreenComponent
 import net.fabricmc.api.ClientModInitializer
@@ -69,6 +70,7 @@ object IHateTrophyFishing : ClientModInitializer {
                 it()
             }
             Location.tick(client)
+            UpdateCheck.tick()
             Tracker.tick(client)
             Streak.tick(client)
             Roulette.tick()
