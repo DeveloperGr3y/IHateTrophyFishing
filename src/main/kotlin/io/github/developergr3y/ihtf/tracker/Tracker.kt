@@ -11,7 +11,7 @@ import io.github.developergr3y.ihtf.hud.HudManager
 import io.github.developergr3y.ihtf.trophy.FishCounts
 import io.github.developergr3y.ihtf.trophy.Trophies
 import io.github.developergr3y.ihtf.trophy.TrophyTier
-import io.github.developergr3y.ihtf.trophy.pityStatuses
+import io.github.developergr3y.ihtf.trophy.pityGuaranteed
 import io.github.developergr3y.ihtf.util.Location
 import net.minecraft.client.Minecraft
 
@@ -66,8 +66,7 @@ object Tracker {
         // Checked before counting this catch: was it the first of this tier? (for the roulette's "first only")
         val firstOfTier = (profile.lifetime[key]?.get(tier) ?: 0) == 0
         // ...and was this tier guaranteed by pity? (for achievements)
-        val fromPity = tier >= TrophyTier.GOLD &&
-            pityStatuses(key, profile, showBoth = true).any { it.tier == tier && it.catchesLeft <= 1 }
+        val fromPity = tier >= TrophyTier.GOLD && pityGuaranteed(key, tier, profile)
         profile.lifetime.getOrPut(key) { FishCounts() }.add(tier, amount)
         profile.pity[key]?.onCatch(tier, amount)
         for (period in profile.activePeriods()) {
