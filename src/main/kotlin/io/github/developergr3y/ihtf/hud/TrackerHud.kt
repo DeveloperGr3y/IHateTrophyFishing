@@ -58,16 +58,29 @@ object TrackerHud : HudElement("Trophy Tracker") {
             for ((key, counts) in shown) {
                 val rate = Tracker.perHour(counts.total, period)
                 val countColour = if (Tracker.isFlashing(key)) "§a" else "§7"
-                lines += HudLine("${Trophies.colouredName(key, profile)} ${countColour}x${counts.total} ${formatRate(rate)}", iconKey = key)
+                val name = "${Trophies.colouredName(key, profile)} ${countColour}x${counts.total} ${formatRate(rate)}"
                 // The "/h" above is what you've actually caught; time until pity uses the steadier estimate.
                 val estimate = Tracker.estimatedPerHour(key, period, profile)
-                for (pity in pityStatuses(key, profile, config.showBothPities)) {
+                val pities = pityStatuses(key, profile, config.showBothPities).map { pity ->
                     val time = when {
                         pity.catchesLeft == 0 -> "§anext catch!"
                         estimate == null -> "§7calculating…"
                         else -> "§e~" + formatDuration((pity.catchesLeft / estimate * 3_600_000).toLong())
                     }
-                    lines += HudLine(" ${pity.tier.formatted} §7pity in §f${pity.catchesLeft} §7· Time until pity: $time", indent = true)
+                    pity to time
+                }
+                if (config.compact) {
+                    // "Flyfish x136 (23.9/h) · ◆ 92 ~3h 52m", with the tier as a coloured diamond.
+                    val pityText = pities.joinToString("") { (pity, time) ->
+                        val left = if (pity.catchesLeft == 0) "" else "§f${pity.catchesLeft} "
+                        " §8· ${pity.tier.colour}◆ $left$time"
+                    }
+                    lines += HudLine(name + pityText, iconKey = key)
+                } else {
+                    lines += HudLine(name, iconKey = key)
+                    for ((pity, time) in pities) {
+                        lines += HudLine(" ${pity.tier.formatted} §7pity in §f${pity.catchesLeft} §7· Time until pity: $time", indent = true)
+                    }
                 }
             }
             if (hidden > 0) lines += HudLine("§8$hidden hidden (already have ${config.hideOwned.tierName})")
@@ -84,6 +97,10 @@ object TrackerHud : HudElement("Trophy Tracker") {
     private fun buttons(view: TrackerView) = buildList {
         add(HudLine("§7[Click to show §a[${view.next}]§7]") {
             config.view = view.next
+            IHateTrophyFishing.saveConfig()
+        })
+        add(HudLine(if (config.compact) "§7[Click for §a[Full]§7]" else "§7[Click for §a[Compact]§7]") {
+            config.compact = !config.compact
             IHateTrophyFishing.saveConfig()
         })
         add(
