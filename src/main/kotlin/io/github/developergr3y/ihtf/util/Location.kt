@@ -17,40 +17,50 @@ object Location {
     private const val CHECK_INTERVAL_MS = 1_000L
     private const val SEARCH_MS = 20_000L
 
-    /** In Hypixel SkyBlock right now. Nothing shows or counts outside it. */
-    var onSkyBlock = false
-        private set
+    // From the scoreboard and tab list, for when Hypixel's own location packet isn't available.
+    private var sidebarSkyBlock = false
+    private var tabArea: String? = null
 
-    /** e.g. "Crimson Isle", "Private Island"; null if unknown (not in SkyBlock, or tab widgets turned off). */
-    var area: String? = null
-        private set
+    /** In Hypixel SkyBlock right now. Nothing shows or counts outside it. */
+    val onSkyBlock get() = HypixelLocation.serverType?.let { it == "SKYBLOCK" } ?: sidebarSkyBlock
+
+    /**
+     * e.g. "Crimson Isle", "Private Island", "Dungeon"; null if unknown. Hypixel's location packet when we have it
+     * (always right, even in dungeons, whose tab list has no Area line), otherwise the tab list's "Area:" line.
+     */
+    val area: String? get() = if (HypixelLocation.serverType != null) HypixelLocation.map else tabArea
     private var lastCheck = 0L
     private var lastLevel: Any? = null
     private var searchUntil = 0L
 
     /**
-     * On the Crimson Isle or the Lotus Atoll. Inside SkyBlock, an unknown area (no tab list Area line) counts as
-     * yes, so the mod keeps working for people who've turned Hypixel's tab widgets off.
+     * On the Crimson Isle or the Lotus Atoll. With Hypixel's location packet that's exact. Without it, an unknown area
+     * (no tab list Area line) counts as yes, so the mod keeps working for people who've turned tab widgets off.
      */
-    val onTrophyIsland get() = onSkyBlock && (area?.let { it in trophyIslands } ?: true)
+    val onTrophyIsland: Boolean
+        get() {
+            if (!onSkyBlock) return false
+            if (HypixelLocation.serverType != null) return HypixelLocation.map in trophyIslands
+            return tabArea?.let { it in trophyIslands } ?: true
+        }
 
     fun tick(client: Minecraft) {
         val now = System.currentTimeMillis()
         if (client.level !== lastLevel) {
             lastLevel = client.level
-            onSkyBlock = false
-            area = null
+            sidebarSkyBlock = false
+            tabArea = null
             searchUntil = now + SEARCH_MS
         }
         if (now - lastCheck < CHECK_INTERVAL_MS) return
-        if ((onSkyBlock && area != null) || now > searchUntil) return
+        if ((sidebarSkyBlock && tabArea != null) || now > searchUntil) return
         lastCheck = now
 
         val title = client.level?.scoreboard?.getDisplayObjective(DisplaySlot.SIDEBAR)?.displayName?.string
-        onSkyBlock = title?.stripFormatting()?.uppercase()?.contains("SKYBLOCK") == true
+        sidebarSkyBlock = title?.stripFormatting()?.uppercase()?.contains("SKYBLOCK") == true
 
         val players = client.connection?.listedOnlinePlayers
-        area = if (!onSkyBlock || players == null) {
+        tabArea = if (!sidebarSkyBlock || players == null) {
             null
         } else {
             players.firstNotNullOfOrNull { info ->

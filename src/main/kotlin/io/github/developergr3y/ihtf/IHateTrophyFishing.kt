@@ -19,6 +19,7 @@ import io.github.developergr3y.ihtf.trophy.MenuImport
 import io.github.developergr3y.ihtf.trophy.SyncStatus
 import io.github.developergr3y.ihtf.trophy.TrophyTier
 import io.github.developergr3y.ihtf.util.Compat
+import io.github.developergr3y.ihtf.util.HypixelLocation
 import io.github.developergr3y.ihtf.util.Location
 import io.github.developergr3y.ihtf.util.UpdateCheck
 import io.github.notenoughupdates.moulconfig.gui.GuiContext
@@ -66,6 +67,7 @@ object IHateTrophyFishing : ClientModInitializer {
         }
 
         ChatListener.register()
+        HypixelLocation.register()
 
         ClientTickEvents.END_CLIENT_TICK.register { client ->
             nextTick?.let {
