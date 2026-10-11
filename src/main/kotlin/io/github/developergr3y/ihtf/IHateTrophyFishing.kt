@@ -20,9 +20,9 @@ import io.github.developergr3y.ihtf.trophy.SyncStatus
 import io.github.developergr3y.ihtf.trophy.TrophyTier
 import io.github.developergr3y.ihtf.util.Compat
 import io.github.developergr3y.ihtf.util.Location
+import io.github.developergr3y.ihtf.util.UpdateCheck
 import io.github.notenoughupdates.moulconfig.gui.GuiContext
 import io.github.notenoughupdates.moulconfig.gui.GuiElementComponent
-import io.github.developergr3y.ihtf.util.UpdateCheck
 import io.github.notenoughupdates.moulconfig.managed.ManagedConfig
 import io.github.notenoughupdates.moulconfig.platform.MoulConfigScreenComponent
 import net.fabricmc.api.ClientModInitializer
