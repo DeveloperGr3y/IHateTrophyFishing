@@ -99,7 +99,10 @@ object IHateTrophyFishing : ClientModInitializer {
         HudElementRegistry.addLast(id("roulette"), RouletteOverlay::render) // on top of everything
         HudElementRegistry.addLast(id("achievement_toast"), AchievementToast::render)
 
-        ClientPlayConnectionEvents.DISCONNECT.register { _, _ -> Storage.save() }
+        ClientPlayConnectionEvents.DISCONNECT.register { _, _ ->
+            Roulette.flush() // don't leave a held-back catch message hidden
+            Storage.save()
+        }
         ClientLifecycleEvents.CLIENT_STOPPING.register { Storage.save() }
 
         registerCommands()

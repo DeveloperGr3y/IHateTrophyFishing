@@ -287,6 +287,12 @@ class RouletteConfig {
     @ConfigOption(name = "Sounds", desc = "Reel ticks and the jackpot sound.")
     @ConfigEditorBoolean
     var sounds = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Hide Message", desc = "Hold back the catch message in chat until the roulette stops spinning.")
+    @ConfigEditorBoolean
+    var hideMessage = true
 }
 
 class StreakConfig {
