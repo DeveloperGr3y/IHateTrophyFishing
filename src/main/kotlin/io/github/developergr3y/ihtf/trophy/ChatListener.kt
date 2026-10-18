@@ -3,6 +3,7 @@ package io.github.developergr3y.ihtf.trophy
 import io.github.developergr3y.ihtf.data.Storage
 import io.github.developergr3y.ihtf.odds.OddsImport
 import io.github.developergr3y.ihtf.tracker.Tracker
+import io.github.developergr3y.ihtf.util.Compat
 import io.github.developergr3y.ihtf.util.colourBefore
 import io.github.developergr3y.ihtf.util.toLegacyString
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents
@@ -13,7 +14,8 @@ import net.minecraft.network.chat.Component
  *
  * We listen on ALLOW_GAME because Fabric gives every mod the *original* message there, before any mod
  * (e.g. one that rewrites trophy messages, or hides bronze and duplicate catches)
- * changes or hides it. We always return true, so we never hide anything ourselves.
+ * changes or hides it. The only thing we ever hide is a Gold/Diamond catch while its roulette is spinning
+ * (Roulette's "Hide Message" option); it is added back to chat as soon as the spin lands.
  */
 object ChatListener {
     /**
@@ -33,28 +35,32 @@ object ChatListener {
 
     fun register() {
         ClientReceiveMessageEvents.ALLOW_GAME.register { message, overlay ->
-            if (!overlay) onMessage(message)
-            true
+            overlay || onMessage(message)
         }
     }
 
-    private fun onMessage(message: Component) {
+    /** @return false to hide the message (the roulette will show it once the spin lands). */
+    private fun onMessage(message: Component): Boolean {
         val text = message.string.stripFormatting().trim()
 
         profile.find(text)?.let {
             Storage.setProfile(it.groupValues[1])
-            return
+            return true
         }
 
         OddsImport.onChat(text)
 
         trophyCatch.find(text)?.let {
             val name = it.groupValues[1].trim()
-            val tier = TrophyTier.fromName(it.groupValues[2]) ?: return
+            val tier = TrophyTier.fromName(it.groupValues[2]) ?: return true
             val amount = it.groupValues[3].toIntOrNull() ?: 1
             // Hypixel colours the name by item rarity, e.g. "§r§5Karate Fish".
             val colour = colourBefore(message.toLegacyString(), name)
-            Tracker.onCatch(name, tier, colour, amount)
+            val hidden = Tracker.onCatch(name, tier, colour, amount) {
+                Compat.chat.addClientSystemMessage(message)
+            }
+            return !hidden
         }
+        return true
     }
 }

@@ -57,7 +57,17 @@ object Tracker {
 
     private val afkTimeoutMs get() = IHateTrophyFishing.config.trackers.trophyFish.afkTimeoutSeconds * 1000L
 
-    fun onCatch(displayName: String, tier: TrophyTier, colour: String?, amount: Int = 1) {
+    /**
+     * [showMessage] = puts the original chat message back, if the roulette wants to hold it until the spin lands.
+     * @return true if the roulette is now holding the message, so the chat listener should hide it.
+     */
+    fun onCatch(
+        displayName: String,
+        tier: TrophyTier,
+        colour: String?,
+        amount: Int = 1,
+        showMessage: (() -> Unit)? = null,
+    ): Boolean {
         val key = Trophies.key(displayName)
         val now = System.currentTimeMillis()
         val profile = Storage.profile()
@@ -84,8 +94,9 @@ object Tracker {
         Storage.markDirty()
         HudManager.refreshAll()
         Streak.onCatch(tier, amount)
-        Roulette.onCatch(key, tier, firstOfTier)
+        val hidden = Roulette.onCatch(key, tier, firstOfTier, showMessage)
         Achievements.onCatch(tier, firstOfTier, fromPity)
+        return hidden
     }
 
     fun tick(client: Minecraft) {
