@@ -4,6 +4,7 @@ import io.github.developergr3y.ihtf.config.ModConfig
 import io.github.developergr3y.ihtf.data.Period
 import io.github.developergr3y.ihtf.data.Storage
 import io.github.developergr3y.ihtf.features.Roulette
+import io.github.developergr3y.ihtf.features.Spotlight
 import io.github.developergr3y.ihtf.features.SlugfishTimer
 import io.github.developergr3y.ihtf.features.achievements.Achievements
 import io.github.developergr3y.ihtf.hud.AchievementToast
@@ -79,6 +80,7 @@ object IHateTrophyFishing : ClientModInitializer {
             Tracker.tick(client)
             Streak.tick(client)
             Roulette.tick()
+            Spotlight.tick()
             Achievements.tick(client)
             AchievementToast.tick()
             SlugfishTimer.tick(client)

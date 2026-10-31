@@ -28,6 +28,7 @@
 		]
 	},
 	"accessWidener": "ihatetrophyfishing.classtweaker",
+	"mixins": ["ihatetrophyfishing.mixins.json"],
 	"depends": {
 		"fabricloader": ">=${loader_version}",
 		"minecraft": "${minecraft_range}",

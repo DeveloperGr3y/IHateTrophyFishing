@@ -27,11 +27,27 @@ object Roulette {
     /** [deferredMessage] = re-adds the hidden chat message; called once, when the spin lands. */
     class Spin(val key: String, val tier: TrophyTier, private val deferredMessage: (() -> Unit)? = null) {
         val isDiamond = tier == TrophyTier.DIAMOND
-        val spinMs = if (isDiamond) 4_000L else 2_500L
-        val holdMs = if (isDiamond) 2_200L else 1_500L
+
+        /** Diamond Spotlight: the screen clears and dims, and the reel runs twice as long. Decided when it starts. */
+        val spotlight = isDiamond && config.spotlight
+        val spinMs = when {
+            spotlight -> 8_000L
+            isDiamond -> 4_000L
+            else -> 2_500L
+        }
+        val holdMs = when {
+            spotlight -> 3_000L
+            isDiamond -> 2_200L
+            else -> 1_500L
+        }
         val totalMs get() = spinMs + holdMs
 
-        private val cardCount = if (isDiamond) 45 else 30
+        // More cards for a longer spin, so the reel moves at the same speed and just keeps going.
+        private val cardCount = when {
+            spotlight -> 85
+            isDiamond -> 45
+            else -> 30
+        }
         val winnerIndex = cardCount - 5
         val cards: List<Card> = buildCards()
 
@@ -97,7 +113,8 @@ object Roulette {
             else -> return false
         }
         if (mode == RouletteMode.OFF || (mode == RouletteMode.FIRST_ONLY && !firstOfTier)) return false
-        val deferred = showMessage.takeIf { config.hideMessage }
+        // Diamond Spotlight always holds the message back: chat is hidden during the spin anyway.
+        val deferred = showMessage.takeIf { config.hideMessage || (tier == TrophyTier.DIAMOND && config.spotlight) }
         val started = start(Spin(key, tier, deferred))
         return started && deferred != null
     }
