@@ -1,6 +1,7 @@
 classTweaker v1 official
 
 # Required by the bundled MoulConfig (copied from its moulconfig.accesswidener; identical for 26.1 and 26.2).
+# 26.3 has its own copy in versions/26.3/.
 accessible field net/minecraft/client/gui/GuiGraphicsExtractor scissorStack Lnet/minecraft/client/gui/GuiGraphicsExtractor$ScissorStack;
 accessible class net/minecraft/client/gui/GuiGraphicsExtractor$ScissorStack
 accessible field net/minecraft/client/gui/GuiGraphicsExtractor$ScissorStack stack Ljava/util/Deque;

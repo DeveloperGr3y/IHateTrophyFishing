@@ -21,14 +21,14 @@ body:
     id: mod-version
     attributes:
       label: Mod version
-      placeholder: e.g. 0.1.0+mc26.2
+      placeholder: e.g. 0.1.0+mc26.3
     validations:
       required: true
   - type: input
     id: mc-version
     attributes:
       label: Minecraft version
-      placeholder: e.g. 26.2
+      placeholder: e.g. 26.3
     validations:
       required: true
   - type: textarea

@@ -50,8 +50,21 @@ dependencies {
     compileOnly("com.terraformersmc:modmenu:${property("modmenu_version")}")
 }
 
+// Access the bundled MoulConfig needs. A version can have its own copy in versions/<version>/ (26.3 renamed
+// Blaze3D's packages), which then replaces the shared one in the jar.
+val classTweaker = rootProject.file("versions/$mcVersion/ihatetrophyfishing.classtweaker")
+    .takeIf { it.exists() } ?: rootProject.file("src/main/resources/ihatetrophyfishing.classtweaker")
+
 loom {
-    accessWidenerPath = rootProject.file("src/main/resources/ihatetrophyfishing.classtweaker")
+    accessWidenerPath = classTweaker
+}
+
+tasks.processResources {
+    if (classTweaker.parentFile.name == mcVersion) {
+        from(classTweaker)
+        // Keep this version's copy, drop the shared one.
+        eachFile { if (name == classTweaker.name && file.parentFile.name != mcVersion) exclude() }
+    }
 }
 
 java {

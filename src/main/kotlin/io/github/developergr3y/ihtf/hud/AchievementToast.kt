@@ -159,7 +159,14 @@ object AchievementToast {
         }
     }
 
+    // 26.3 moved the totem animation from the game renderer to the player.
+    //? if >=26.3 {
+    /*private fun totem(item: ItemStack) {
+        Minecraft.getInstance().player?.displayItemActivation(item)
+    }
+    *///?} else {
     private fun totem(item: ItemStack) = Minecraft.getInstance().gameRenderer.displayItemActivation(item)
+    //?}
 
     private fun sound(name: String, pitch: Float, volume: Float) {
         if (config.sounds) Sounds.play(name, pitch, volume)
