@@ -10,7 +10,7 @@ Gold and Diamond odds, and a few things to make the grind hurt less. Works on it
 [![Modrinth downloads](https://img.shields.io/modrinth/dt/i-hate-trophy-fishing?logo=modrinth&label=modrinth)](https://modrinth.com/mod/i-hate-trophy-fishing)
 [![GitHub downloads](https://img.shields.io/github/downloads/DeveloperGr3y/IHateTrophyFishing/total?logo=github&label=github)](https://github.com/DeveloperGr3y/IHateTrophyFishing/releases)
 [![Latest release](https://img.shields.io/github/v/release/DeveloperGr3y/IHateTrophyFishing?label=release)](https://github.com/DeveloperGr3y/IHateTrophyFishing/releases/latest)
-[![Minecraft](https://img.shields.io/badge/minecraft-26.1.x%20%7C%2026.2-green)](#installing)
+[![Minecraft](https://img.shields.io/badge/minecraft-26.1.x%20%7C%2026.2%20%7C%2026.3-green)](#installing)
 [![Licence: CC0](https://img.shields.io/badge/licence-CC0-lightgrey)](LICENSE)
 
 **[Modrinth](https://modrinth.com/mod/i-hate-trophy-fishing)** · **[Releases](https://github.com/DeveloperGr3y/IHateTrophyFishing/releases)** · **[Report a bug](https://github.com/DeveloperGr3y/IHateTrophyFishing/issues)**
@@ -97,10 +97,10 @@ chime for a Common, up to a drumroll, totem animation and confetti for the top t
 
 ## Installing
 
-1. Install [Fabric Loader](https://fabricmc.net/use/) 0.19.5+ for Minecraft 26.1.x or 26.2, and
+1. Install [Fabric Loader](https://fabricmc.net/use/) 0.19.5+ for Minecraft 26.1.x, 26.2 or 26.3, and
    [Fabric API](https://modrinth.com/mod/fabric-api).
 2. Download the jar for your Minecraft version from [Modrinth](https://modrinth.com/mod/i-hate-trophy-fishing) or
-   [Releases](https://github.com/DeveloperGr3y/IHateTrophyFishing/releases) (`+mc26.1` or `+mc26.2`).
+   [Releases](https://github.com/DeveloperGr3y/IHateTrophyFishing/releases) (`+mc26.1`, `+mc26.2` or `+mc26.3`).
 3. Drop it in your `mods` folder. Kotlin and MoulConfig are bundled, and it needs Java 25.
 
 Release notes include SHA-256 checksums if you want to check your download.

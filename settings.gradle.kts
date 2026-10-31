@@ -17,7 +17,7 @@ rootProject.name = "IHateTrophyFishing"
 // One codebase, one jar per Minecraft version. Per-version settings live in versions/<version>/gradle.properties.
 stonecutter {
     create(rootProject) {
-        versions("26.1", "26.2")
+        versions("26.1", "26.2", "26.3")
         vcsVersion = "26.2"
     }
 }

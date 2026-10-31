@@ -23,5 +23,10 @@ object Sounds {
         return true
     }
 
+    // 26.3 moved opening links out of Util into Blaze3D.
+    //? if >=26.3 {
+    /*fun openSoundList() = com.mojang.blaze3d.Blaze3D.openUri(java.net.URI.create(SOUND_LIST_URL))
+    *///?} else {
     fun openSoundList() = Util.getPlatform().openUri(SOUND_LIST_URL)
+    //?}
 }
