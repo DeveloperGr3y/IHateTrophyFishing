@@ -287,6 +287,23 @@ class RouletteConfig {
     @ConfigOption(name = "Sounds", desc = "Reel ticks and the jackpot sound.")
     @ConfigEditorBoolean
     var sounds = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(name = "Hide Message", desc = "Hold back the catch message in chat until the roulette stops spinning.")
+    @ConfigEditorBoolean
+    var hideMessage = true
+
+    @Expose
+    @JvmField
+    @ConfigOption(
+        name = "Diamond Spotlight",
+        desc = "On a Diamond, everything else on screen (chat, tab list, scoreboard, hotbar and other mods' displays) " +
+            "disappears, the world dims, and the reel spins twice as long. Taking damage brings your screen back " +
+            "straight away. Test: §e/ihtf roulette",
+    )
+    @ConfigEditorBoolean
+    var spotlight = true
 }
 
 class StreakConfig {

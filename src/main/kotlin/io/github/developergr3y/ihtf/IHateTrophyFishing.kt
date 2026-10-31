@@ -4,6 +4,7 @@ import io.github.developergr3y.ihtf.config.ModConfig
 import io.github.developergr3y.ihtf.data.Period
 import io.github.developergr3y.ihtf.data.Storage
 import io.github.developergr3y.ihtf.features.Roulette
+import io.github.developergr3y.ihtf.features.Spotlight
 import io.github.developergr3y.ihtf.features.SlugfishTimer
 import io.github.developergr3y.ihtf.features.achievements.Achievements
 import io.github.developergr3y.ihtf.hud.AchievementToast
@@ -79,6 +80,7 @@ object IHateTrophyFishing : ClientModInitializer {
             Tracker.tick(client)
             Streak.tick(client)
             Roulette.tick()
+            Spotlight.tick()
             Achievements.tick(client)
             AchievementToast.tick()
             SlugfishTimer.tick(client)
@@ -99,7 +101,10 @@ object IHateTrophyFishing : ClientModInitializer {
         HudElementRegistry.addLast(id("roulette"), RouletteOverlay::render) // on top of everything
         HudElementRegistry.addLast(id("achievement_toast"), AchievementToast::render)
 
-        ClientPlayConnectionEvents.DISCONNECT.register { _, _ -> Storage.save() }
+        ClientPlayConnectionEvents.DISCONNECT.register { _, _ ->
+            Roulette.flush() // don't leave a held-back catch message hidden
+            Storage.save()
+        }
         ClientLifecycleEvents.CLIENT_STOPPING.register { Storage.save() }
 
         registerCommands()
